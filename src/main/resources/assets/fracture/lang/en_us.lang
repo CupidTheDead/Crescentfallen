@@ -1,0 +1,39 @@
+
+
+
+//ITEMS
+
+item.ingot_centurium.name=Centurium Ingot
+
+item.tanzanite.name=Tanzanite
+
+item.ingot_seritonium.name=Pearlized Seritonium
+
+tile.block_centurium.name=Block of Centurium
+
+//BLOCKS
+
+tile.stone_fracture.name=Fracture Stone
+
+tile.stone_subsurface_fracture.name=Fracture Andisite
+
+
+
+
+
+
+//PLANETS
+
+planet.Hollows=Hollows
+
+planet.Fracture=The Fracture
+
+solarsystem.Triopas=Triopas
+
+star.Triopas=Triopas
+
+//CREATIVE TABS
+
+itemGroup.crescentfallentab=Crescentfallen Items
+
+itemGroup.CrescentfallenTab=Crescentfallen Blocks

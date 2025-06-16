@@ -1,0 +1,11 @@
+{ 
+    "parent": "block/cube_all",
+    "textures": { 
+"down":"fracture:blocks/stone_fracture",
+        "up":"fracture:blocks/stone_fracture",
+        "north":"fracture:blocks/peak_sediment_fracture",
+        "east":"fracture:blocks/peak_sediment_fracture",
+        "south":"fracture:blocks/peak_sediment_fracture",
+        "west":"fracture:blocks/peak_sediment_fracture"
+        }
+}

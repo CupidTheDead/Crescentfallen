@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "normal": { "model": "fracture:peak_sediment_fracture" }
+    }
+}

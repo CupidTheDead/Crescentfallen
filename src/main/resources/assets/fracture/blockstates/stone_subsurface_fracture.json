@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "normal": { "model": "fracture:stone_subsurface_fracture" }
+    }
+}

@@ -1,0 +1,11 @@
+{ 
+    "parent": "block/cube_all",
+    "textures": { 
+"down":"fracture:blocks/trash_pile_top",
+        "up":"fracture:blocks/trash_pile_top",
+        "north":"fracture:blocks/trash_pile",
+        "east":"fracture:blocks/trash_pile",
+        "south":"fracture:blocks/trash_pile",
+        "west":"fracture:blocks/trash_pile"
+        }
+}

@@ -1,0 +1,9 @@
+{
+    "variants": 
+    { 
+        "variant=copper": { "model": "fracture:ore_overworld_copper" },
+        "variant=tin": { "model": "fracture:ore_overworld_tin" }
+        
+    }
+}
+     
