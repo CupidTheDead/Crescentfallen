@@ -54,8 +54,8 @@ public class RegistryHandler
 		//GameRegistry.registerWorldGenerator(new WorldGenCustomStructures(), 0);
 		
 		//Biomeinit.registerBiomes();
-		DimensionInit.registerDimensions();
-		GalacticraftRegistry.registerDimension("AddonDimensions.dimPlanetTwoS1", "_addonDimensions.dimplanettwos1,", -36, WorldProviderTheFracture.class, false);
+		//DimensionInit.registerDimensions();
+		//GalacticraftRegistry.registerDimension("AddonDimensions.dimPlanetTwoS1", "_addonDimensions.dimplanettwos1,", -36, WorldProviderTheFracture.class, false);
 	}
 		public static void initRegistries()
 		{

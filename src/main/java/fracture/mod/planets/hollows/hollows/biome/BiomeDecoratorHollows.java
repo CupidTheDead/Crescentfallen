@@ -5,23 +5,22 @@ import net.minecraft.world.World;
 
 public class BiomeDecoratorHollows extends BiomeDecoratorSpace {
 
-    private World currentWorld;
+	private World currentWorld;
 
+	public BiomeDecoratorHollows() {
+	}
 
-    public BiomeDecoratorHollows() {
-    }
+	@Override
+	protected void setCurrentWorld(World world) {
+		this.currentWorld = world;
+	}
 
-    @Override
-    protected void setCurrentWorld(World world) {
-        this.currentWorld = world;
-    }
+	@Override
+	protected World getCurrentWorld() {
+		return this.currentWorld;
+	}
 
-    @Override
-    protected World getCurrentWorld() {
-        return this.currentWorld;
-    }
-
-    @Override
-    protected void decorate() {
-    }
+	@Override
+	protected void decorate() {
+	}
 }

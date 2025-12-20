@@ -56,12 +56,12 @@ public class BiomeTheFractureMountains extends TheFractureBiomes {
 	    {
 	        if (rand.nextInt(25) == 0)
 	        {
-	            WorldGenTheFractureburns worldGenTheFractureburns = new WorldGenTheFractureburns(0);
-				worldGenTheFractureburns.generate(world, rand, pos);
+	         //   WorldGenTheFractureburns worldGenTheFractureburns = new WorldGenTheFractureburns(0);
+				//worldGenTheFractureburns.generate(world, rand, pos);
 	        }
 	        if (rand.nextInt(64) == 0)
 	        {
-	            //BiomeNibiru.FOSSILS.generate(world, rand, pos);
+	            //Minecraft.FOSSILS.generate(world, rand, pos);
 	        }
 	        super.decorate(world, rand, pos);
 	    }

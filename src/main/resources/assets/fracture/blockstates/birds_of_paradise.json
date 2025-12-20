@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "half=lower": { "model": "fracture:birds_of_paradise_lower" },
+    "half=upper": { "model": "fracture:birds_of_paradise_upper" }
+  }
+}

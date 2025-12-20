@@ -11,7 +11,8 @@ import fracture.mod.planets.thefracture.thefracture.biome.BiomeDecoratorTheFract
 //import fracture.mod.planets.hollows.planetone_s1.biome.BiomeDecoratorPlanetOneS1;
 import fracture.mod.world.MapGenAddonCaveGen;
 import fracture.mod.world.MapGenAddonRavinGen;
-import fracture.mod.world.chunk.ChunkProviderBase;
+
+import fracture.mod.world.chunk.ChunkProviderFractureBase;
 //IF ABOVE BREAKS REMOVE IT AND USE THE DEFAULT ONE FROM GC
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
@@ -29,59 +30,63 @@ import net.minecraft.world.gen.NoiseGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 
-public class ChunkProviderthefracture extends ChunkProviderBase {
+public class ChunkProviderthefracture extends ChunkProviderFractureBase {
 
-   		private final BiomeDecoratorTheFracture decorator = new BiomeDecoratorTheFracture();
-   		private final MapGenAddonRavinGen ravineGenerator = new MapGenAddonRavinGen();
-   		private final MapGenAddonCaveGen caveGenerator = new MapGenAddonCaveGen(BlockInit.SURFACE_FRACTURE.getDefaultState(), 
-   		Blocks.LAVA.getDefaultState(),Sets.newHashSet(BlockInit.SURFACE_FRACTURE, BlockInit.STONE_FRACTURE));
-   		//private final MapGenAddonCaveGen caveGenerator = new MapGenAddonCaveGen(Blocks.DIAMOND_BLOCK.getDefaultState(), Blocks.LAVA.getDefaultState(),
-   		//Sets.newHashSet(BlockInit.SURFACE_FRACTURE, BlockInit.STONE_FRACTURE));
-    
-    public ChunkProviderthefracture(World par1World, long seed, boolean mapFeaturesEnabled) {
-        super(par1World, seed, mapFeaturesEnabled);
-        
-    }
+	private final BiomeDecoratorTheFracture decorator = new BiomeDecoratorTheFracture();
+	private final MapGenAddonRavinGen ravineGenerator = new MapGenAddonRavinGen();
+	private final MapGenAddonCaveGen caveGenerator = new MapGenAddonCaveGen(
+			BlockInit.SURFACE_FRACTURE.getDefaultState(), Blocks.LAVA.getDefaultState(),
+			Sets.newHashSet(BlockInit.SURFACE_FRACTURE, BlockInit.STONE_FRACTURE));
+	// private final MapGenAddonCaveGen caveGenerator = new
+	// MapGenAddonCaveGen(Blocks.DIAMOND_BLOCK.getDefaultState(),
+	// Blocks.LAVA.getDefaultState(),
+	// Sets.newHashSet(BlockInit.SURFACE_FRACTURE, BlockInit.STONE_FRACTURE));
 
-    @Override
-    protected List<MapGenBaseMeta> getWorldGenerators() {
-        List<MapGenBaseMeta> generators = Lists.newArrayList();
-        generators.add(this.caveGenerator);
-        return generators;
-    }
+	public ChunkProviderthefracture(World par1World, long seed, boolean mapFeaturesEnabled) {
+		super(par1World, seed, mapFeaturesEnabled);
 
-    @Override
-    public int getCraterProbability() {
-        return 2000;
-    }
+	}
 
-    @Override
-    public void onChunkProvide(int cX, int cZ, ChunkPrimer primer) {
-        this.ravineGenerator.generate(this.worldObj, cX, cZ, primer);
-    }
+	@Override
+	protected List<MapGenBaseMeta> getWorldGenerators() {
+		List<MapGenBaseMeta> generators = Lists.newArrayList();
+		generators.add(this.caveGenerator);
+		return generators;
+	}
 
-    @Override
-    public void onPopulate(int cX, int cZ) {
+	@Override
+	public int getCraterProbability() {
+		return 2000;
+	}
 
-    }
+	@Override
+	public void onChunkProvide(int cX, int cZ, ChunkPrimer primer) {
+		this.ravineGenerator.generate(this.worldObj, cX, cZ, primer);
+	}
 
-    @Override
-    public void recreateStructures(Chunk chunk, int x, int z) {
-    }
-    @Override
-    protected void decoratePlanet(World world, Random rand, int x, int z) {
-        this.decorator.decorate(this.worldObj, rand, x, z);
-    }
+	@Override
+	public void onPopulate(int cX, int cZ) {
+
+	}
+
+	@Override
+	public void recreateStructures(Chunk chunk, int x, int z) {
+	}
+
+	@Override
+	protected void decoratePlanet(World world, Random rand, int x, int z) {
+		this.decorator.decorate(this.worldObj, rand, x, z);
+	}
 
 //	@Override
 //	protected IBlockState getTopBlock() {
-		// TODO Auto-generated method stub
+	// TODO Auto-generated method stub
 //		return null;
 //	}
 
 //	@Override
 //	protected IBlockState getSubBlock() {
-		// TODO Auto-generated method stub
-	//	return null;
-	}
+	// TODO Auto-generated method stub
+	// return null;
+}
 //}

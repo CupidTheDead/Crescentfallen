@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 
 import java.util.Random;
 
-import fracture.mod.Main;
+import fracture.mod.CFMain;
 import fracture.mod.util.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -31,9 +31,9 @@ public class SpaceGrass extends Block implements IHasModel
 	{
 
 		super(Material.GRASS);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName(name);
-		setCreativeTab(fracture.mod.Main.CrescentfallenBlocks);
+		setCreativeTab(CFMain.CrescentfallenBlocks);
 		setHardness(0.6f);
 		setResistance(0.6f);
 		setLightLevel(0.0f);
@@ -49,7 +49,7 @@ public class SpaceGrass extends Block implements IHasModel
 	
 	@Override
 	public void registerModels() {
-		Main.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory"); {}
+		CFMain.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory"); {}
 	}
 
 	@Override
@@ -60,22 +60,26 @@ public class SpaceGrass extends Block implements IHasModel
 	
 	
 	
+	
+	@Override
+	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random) {
-		super.randomDisplayTick(state, world, pos, random);
-		EntityPlayer entity = Minecraft.getMinecraft().player;
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-		int i = x;
-		int j = y;
-		int k = z;
-		if (true)
-			for (int l = 0; l < 4; ++l) {
-				double d0 = (i + 0.5) + (random.nextFloat() - 0.5) * 0.5D * 20;
-				double d1 = ((j + 0.7) + (random.nextFloat() - 0.5) * 0.5D) + 0.5;
-				double d2 = (k + 0.5) + (random.nextFloat() - 0.5) * 0.5D * 20;
-				world.spawnParticle(EnumParticleTypes.SUSPENDED_DEPTH, d0, d1, d2, 0, 0, 0);
-			}
+	    super.randomDisplayTick(state, world, pos, random);
+
+	    // Spawn a few gentle floating particles above the grass
+	    for (int i = 0; i < 3; ++i) {
+	        // Center around the block
+	        double x = pos.getX() + 0.9 + (random.nextDouble() - 0.5) * 0.6;
+	        double z = pos.getZ() + 0.9 + (random.nextDouble() - 0.5) * 0.6;
+
+	        // Lift the particles slightly above the block top surface
+	        double y = pos.getY() + 1.05 + random.nextDouble() * 0.3; // <-- note the +1.05 here
+
+	        // Gentle upward float motion
+	        double motionY = 0.005 + random.nextDouble() * 0.005;
+
+	        world.spawnParticle(EnumParticleTypes.SUSPENDED_DEPTH, x, y, z, 0, motionY, 0);
+	    }
 	}
 }
 	

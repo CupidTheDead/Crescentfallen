@@ -2,6 +2,7 @@ package fracture.mod.util.handlers;
 
 import java.io.File;
 
+import fracture.mod.CFMain;
 import micdoodle8.mods.galacticraft.core.Constants;
 import net.minecraftforge.common.config.Configuration;
 
@@ -22,5 +23,19 @@ public class ConfigHandler
 
 	}
 	
+	//CAMERA TILT TESTING
 	
+	  private static void loadConfig() {
+	        CFMain.enableCameraTilt = config.getBoolean(
+	            "enableCameraTilt", 
+	            Configuration.CATEGORY_GENERAL, 
+	            true,
+	            "Set to false to disable camera tilt effect when strafing."
+	        );
+
+	        if (config.hasChanged()) {
+	            config.save();
+	        }
+	        
+}
 }

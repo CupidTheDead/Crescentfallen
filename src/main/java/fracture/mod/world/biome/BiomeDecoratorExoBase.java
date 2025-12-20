@@ -8,8 +8,15 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
-public abstract class BiomeDecoratorExoBase extends BiomeDecorator {
+//
+//
+//
+//THIS IS TESTING CODE FROM MOREPLANETS. DO NOT PUT IN FINAL VERSION.
+//
+//
+//
 
+public abstract class BiomeDecoratorExoBase extends BiomeDecorator {
 	@Override
 	protected void genDecorations(Biome biome, World world, Random rand) {
 		this.generate(biome, world, rand);
@@ -17,28 +24,54 @@ public abstract class BiomeDecoratorExoBase extends BiomeDecorator {
 
 	@Override
 	protected void generateOres(World world, Random rand) {
-
 	}
-	
-	protected void generateOre(WorldGenerator generator, int blockCount, int minHeight, int maxHeight, World world, Random rand) {
-		    if (maxHeight < minHeight) {
-		      int i = minHeight;
-		      minHeight = maxHeight;
-		      maxHeight = i;
-		    } else if (maxHeight == minHeight) {
-		      if (minHeight < 255) {
-		        maxHeight++;
-		      } else {
-		        minHeight--;
-		      } 
-		    } 
-		    for (int j = 0; j < blockCount; j++) {
-		      BlockPos blockpos = this.chunkPos.add(rand.nextInt(16), rand.nextInt(maxHeight - minHeight) + minHeight, rand
-		          .nextInt(16));
-		      generator.generate(world, rand, blockpos);
-		    } 
-		  }
+
+	// enumoregen is what should be your class where the gen settings for the ore is
+	// defined
+	// protected void generateOre(WorldGenerator generator, EnumOreGen oreGen, World
+	// world, Random rand)
+	// {
+	// this.generateOre(generator, oreGen.getBlockCount(), oreGen.getMinHeight(),
+	// oreGen.getMaxHeight(), world, rand);
+	// }
+
+	public void generateOre(WorldGenerator generator, int blockCount, int minHeight, int maxHeight, World world,
+			Random rand) {
+		if (maxHeight < minHeight) {
+			int i = minHeight;
+			minHeight = maxHeight;
+			maxHeight = i;
+		} else if (maxHeight == minHeight) {
+			if (minHeight < 255) {
+				++maxHeight;
+			} else {
+				--minHeight;
+			}
+		}
+
+		for (int j = 0; j < blockCount; ++j) {
+			BlockPos blockpos = this.chunkPos.add(rand.nextInt(16), rand.nextInt(maxHeight - minHeight) + minHeight,
+					rand.nextInt(16));
+			generator.generate(world, rand, blockpos);
+		}
+	}
+
+	// rotected void generateLapis(WorldGenerator generator, World world, Random
+	// rand)
+	// {
+	// this.generateLapis(generator, EnumOreGen.LAPIS.getBlockCount(),
+	// EnumOreGen.LAPIS.getMinHeight(), EnumOreGen.LAPIS.getMaxHeight(), world,
+	// rand);
+	// }
+
+	protected void generateLapis(WorldGenerator generator, int blockCount, int centerHeight, int spread, World world,
+			Random rand) {
+		for (int i = 0; i < blockCount; ++i) {
+			BlockPos blockpos = this.chunkPos.add(rand.nextInt(16),
+					rand.nextInt(spread) + rand.nextInt(spread) + centerHeight - spread, rand.nextInt(16));
+			generator.generate(world, rand, blockpos);
+		}
+	}
 
 	protected abstract void generate(Biome biome, World world, Random rand);
-
 }

@@ -161,7 +161,8 @@ public class MapGenAddonRavinGen extends MapGenBase {
 	@Override
 	protected void recursiveGenerate(World worldIn, int chunkX, int chunkZ, int p_180701_4_, int p_180701_5_,
 			ChunkPrimer chunkPrimerIn) {
-		if (this.rand.nextInt(50) == 0) {
+		//changed from 50, to be more likely
+		if (this.rand.nextInt(5) == 0) {
 			double d0 = chunkX * 16 + this.rand.nextInt(16);
 			double d1 = this.rand.nextInt(this.rand.nextInt(40) + 8) + 20;
 			double d2 = chunkZ * 16 + this.rand.nextInt(16);

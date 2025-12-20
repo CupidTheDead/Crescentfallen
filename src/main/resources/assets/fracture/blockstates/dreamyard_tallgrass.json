@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "half=lower": { "model": "fracture:dreamyard_tallgrass_lower" },
+    "half=upper": { "model": "fracture:dreamyard_tallgrass_upper" }
+  }
+}

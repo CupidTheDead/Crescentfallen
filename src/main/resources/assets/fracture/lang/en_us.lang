@@ -9,18 +9,149 @@ item.tanzanite.name=Tanzanite
 
 item.ingot_seritonium.name=Pearlized Seritonium
 
-tile.block_centurium.name=Block of Centurium
+
+tile.flamingo_feather.name=Flamingo feather
 
 //BLOCKS
 
-tile.stone_fracture.name=Fracture Stone
+tile.astroid_fracture.name=Fracture astroid
+
+tile.stone_fracture.name=Fracture stone
 
 tile.stone_subsurface_fracture.name=Fracture Andisite
 
+tile.stone_subsurface_kona.name=Kona subsurface stone
+
+tile.hollows_stone.name=Hollows stone
+
+tile.surface_hollows.name=Hollows turf
+
+tile.overgrass_full.name=Overgrass block
+
+tile.block_terraminium.name=Block of Terraminium
+
+tile.block_centurium.name=Block of Centurium
+
+tile.block_seritonium.name=Block of Seritonium
+
+tile.dried_dirt.name=Dried dirt
+
+tile.dreamyard_dirt.name=Dreamyard dirt
+
+tile.asteroid_fracture.name=Fracture Asteroid
+
+tile.surface_fracture.name=Fracture Surface
+
+tile.burnt_stone_fracture.name=Burnt Fracture Stone
+
+tile.cobblestone_fracture.name=Fracture cobblestone
+
+tile.peak_sediment_fracture.name=Burnt Fracture Stone
+
+tile.stone_kona.name=Kona stone
+
+tile.stone_subsurface_kona.name=Kona subsurface stone
+
+tile.dreamstone.name=Dreamstone
+
+tile.flesh_pile.name=Flesh pile
+
+tile.trash_pile.name=Trash pile
+
+tile.overgrass_block.name=Overgrass block
+
+tile.cobblestone_kona.name=Kona cobblestone
+
+tile.dark_block.name=Dark block
+
+tile.dream_sand.name=Mushy Dreamyard sand
+
+tile.dreamyard_cobblestone.name=Dreamyard cobblestone
+
+tile.gravel_dreamyard.name=Dreamyard gravel
+
+tile.gravel_fracture.name=Fracture gravel
+
+tile.kona_rust.name=Rust
+
+tile.rusty_pipe2.name=Rusty pipe
+
+tile.salt_deposit.name=Salt deposit
+
+tile.sand_fracture.name=Fracture sand
+
+tile.sand_fracture_hot.name=Heated Fracture sand
+
+tile.spacecraft_floor.name=Spacecraft floor
+
+tile.spacecraft_wall.name=Spacecraft walls
+
+tile.stonebrick_dreamyard.name=Dreamyard stonebrick
+
+tile.stonebrick_fracture.name=Fracture stonebrick
+
+tile.stonebrick_kona.name=Kona stonebrick
+
+tile.stonebrick_dreamyard_small.name=Dreamyard bricks
+
+//FAUNA 
+
+tile.dreamyard_grass.name=Overgrass
+
+tile.bloodflower.name=Bloodflower
+
+tile.red_flowers.name=Red Flowers
+
+tile.blue_flowers.name=Blue Flowers
+
+tile.yellow_flowers.name=Yellow Flowers
+
+tile.dreamyard_lotus.name=Dreamyard Lotus
+
+tile.etherial_mushroom_blue.name=Blue Etherial Mushroom
+
+tile.etherial_mushroom_green.name=Green Etherial Mushroom
+
+tile.etherial_mushroom_purple.name=Purple Etherial Mushroom
+
+tile.guilded_allium.name=Guilded Allium
+
+tile.hyacinth.name=Hyacinth
+
+tile.king_allarius.name=King Allarius
+
+tile.minigrass1.name=Mini Overgrass
+
+tile.minigrass2.name=Mini Overgrass
+
+tile.Paeonia.name=Paeonia
+
+tile.rainbow_rod.name=Rainbow Rod
+
+tile.birds_of_paradise.name=Birds of Paradise
+
+tile.dreamyard_tallgrass.name=Tall Overgrass
+
+tile.alien_weeds.name=Weeds
+
+tile.alpha_rose.name=Rose
 
 
+//ORES
 
+tile.ore_overworld_tin.name=Tin ore
 
+tile.ore_overworld_copper.name=Copper ore
+
+//STARS
+
+star.triopas=Triopas
+
+solarsystem.triopas=Triopas
+
+star.artemis1=Artemis Nebula[WIP]
+
+solarsystem.artemis1=Artemis Nebula
 
 //PLANETS
 
@@ -28,9 +159,13 @@ planet.Hollows=Hollows
 
 planet.Fracture=The Fracture
 
-solarsystem.Triopas=Triopas
+planet.Dreamyard=Dreamyard
 
-star.Triopas=Triopas
+//MOONS
+
+moon.helius=Helius
+
+moon.kona=Kona
 
 //CREATIVE TABS
 

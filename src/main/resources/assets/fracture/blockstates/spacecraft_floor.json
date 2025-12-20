@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "normal": { "model": "fracture:spacecraft_floor" }
+    }
+}

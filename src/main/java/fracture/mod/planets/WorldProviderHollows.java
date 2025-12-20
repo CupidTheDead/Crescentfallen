@@ -3,36 +3,87 @@ package fracture.mod.planets;
 import java.util.LinkedList;
 import java.util.List;
 
-import fracture.mod.AddonConfig;
-import fracture.mod.init.AddonDimensions;
-import fracture.mod.init.AddonPlanets;
+import fracture.mod.init.CFdimensions;
+import fracture.mod.init.CFplanets;
+import fracture.mod.CFConfig;
 import fracture.mod.init.BlockInit;
 import fracture.mod.planets.hollows.ChunkProviderHollows;
+import fracture.mod.planets.hollows.CloudsHollows;
+import fracture.mod.planets.hollows.SkyProviderHollows;
 import fracture.mod.planets.hollows.hollows.biome.BiomeProviderHollows;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeAdaptive;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.WorldProviderSpace;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.api.world.ISolarLevel;
-import micdoodle8.mods.galacticraft.planets.mars.blocks.MarsBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.biome.BiomeProvider;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.client.IRenderHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class WorldProviderHollows extends WorldProviderSpace implements ISolarLevel {
 
-    @Override
-    public Vector3 getSkyColor() {
-        return new Vector3(.3, .6, 1);
-    }
+	  //zollorns
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IRenderHandler getSkyRenderer() {
+		if (super.getSkyRenderer() == null) {
+			this.renderSky();
+		}
+		return super.getSkyRenderer();
+	}
 
-    @Override
-    public float getSolarSize() {
-        return 1.5F;
+	protected void renderSky() {
+		this.setSkyRenderer(new SkyProviderHollows(this));
+	}
+
+	//public IRenderHandler getCloudRenderer() {
+	 //   return null; 
+	//}
+	
+	  protected void renderCloud() {
+		    setCloudRenderer((IRenderHandler)new CloudsHollows());
+		  }
+	  
+	  public double getYCoordinateToTeleport() {
+		    return 150.0D;
+		  }
+	  //zollorns
+	  
+	  
+	  
+	  
+	  
+	//@Override
+	@SideOnly(Side.CLIENT)
+	protected void setCloudRenderer() {
+		if (super.getCloudRenderer() == null)
+        this.setCloudRenderer(new CloudsHollows());
     }
+    public boolean canDoRainSnowIce(Chunk chunk) {
+        return canRainOrSnow();
+      }
+	
+
+	@Override
+	public Vector3 getSkyColor() {
+	    return new Vector3(0.0, 0.0, 0.5);  // navy blue
+	}
+
+	@Override
+	public Vector3 getFogColor() {
+	    return new Vector3(0.95, 0.95, 0.9);  // off white
+	}
+    //@Override
+    //public float getSolarSize() {
+    //    return 1.5F;
+    //}
 
     @Override
     public boolean hasSunset() {
@@ -41,14 +92,14 @@ public class WorldProviderHollows extends WorldProviderSpace implements ISolarLe
 
     @Override
     public long getDayLength() {
-        return 24000L;
+        return 18000L;
     }
-    
     
     //This changed to extend IChunkGenerator and not ChunkProviderBase. If nothing else errors, this may be the cause.
     @Override
     public Class<? extends IChunkGenerator> getChunkProviderClass() {
-        return (Class<? extends IChunkGenerator>) ChunkProviderHollows.class;
+		return ChunkProviderHollows.class;
+        //return (Class<? extends IChunkGenerator>) ChunkProviderHollows.class;
     }
     //^Formally:
     //@Override
@@ -58,7 +109,7 @@ public class WorldProviderHollows extends WorldProviderSpace implements ISolarLe
 
     @Override
     public Class<? extends BiomeProvider> getBiomeProviderClass() {
-        BiomeAdaptive.setBodyMultiBiome(AddonPlanets.planetOneS1);
+        BiomeAdaptive.setBodyMultiBiome(CFplanets.hollows);
         return BiomeProviderHollows.class;
     }
 
@@ -79,7 +130,7 @@ public class WorldProviderHollows extends WorldProviderSpace implements ISolarLe
 
     @Override
     public float getGravity() {
-        return 0.000F;
+        return 0.052F;
     }
 
     @Override
@@ -99,7 +150,7 @@ public class WorldProviderHollows extends WorldProviderSpace implements ISolarLe
 
     @Override
     public boolean canSpaceshipTierPass(int tier) {
-		return tier >= AddonConfig.addon_planet_settings.planetTwoTier;
+		return tier >= CFConfig.CF_planet_settings.planetOneTier;
 		//return tier >=3;
     }
 
@@ -111,14 +162,23 @@ public class WorldProviderHollows extends WorldProviderSpace implements ISolarLe
 
     @Override
     public CelestialBody getCelestialBody() {
-        return AddonPlanets.planetOneS1;
+        return CFplanets.hollows;
     }
 
     @Override
     public float getThermalLevelModifier() {
-        return 5.0F;
+        return 0.0F;
     }
 
+    @Override
+    public boolean canRainOrSnow() {
+        return true;
+    }
+    //@Override
+    public boolean doesSnowGenerate() {
+        return true;
+    }
+    
     @Override
     public double getSolarEnergyMultiplier() {
         return 3.5D;
@@ -126,7 +186,7 @@ public class WorldProviderHollows extends WorldProviderSpace implements ISolarLe
 
     @Override
     public DimensionType getDimensionType() {
-        return AddonDimensions.dimPlanetOneS1;
+        return CFdimensions.hollowsDIM;
     }
 
     @Override
@@ -142,25 +202,17 @@ public class WorldProviderHollows extends WorldProviderSpace implements ISolarLe
     @Override
     public List<Block> getSurfaceBlocks() {
         List<Block> list = new LinkedList<>();
-		  list.add(BlockInit.SURFACE_FRACTURE);
-		  list.add(BlockInit.STONE_FRACTURE);
+		  list.add(BlockInit.SURFACE_HOLLOWS);
+		  list.add(BlockInit.STONE_HOLLOWS);
+		  list.add(Blocks.PACKED_ICE);
 		  list.add(BlockInit.DRIED_DIRT);
 		  list.add(Blocks.GRAVEL);
-		 list.add(MarsBlocks.marsBlock);
-		 list.add(Blocks.STONE);
-		 list.add(Blocks.COBBLESTONE_WALL);
-		 list.add(Blocks.MOSSY_COBBLESTONE);
-		 list.add(Blocks.OBSIDIAN);
-		 list.add(Blocks.MYCELIUM);
-		 //...
+		  //...
 
         return list;
     }
 
-	@Override
-	public Vector3 getFogColor() {
-		return new Vector3(0,0,0);
-	}
+
 	
 }
 

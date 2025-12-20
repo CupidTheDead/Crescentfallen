@@ -1,6 +1,6 @@
 package fracture.mod.objects.items;
 
-import fracture.mod.Main;
+import fracture.mod.CFMain;
 import fracture.mod.init.ItemInit;
 import fracture.mod.util.IHasModel;
 import net.minecraft.creativetab.CreativeTabs;
@@ -12,9 +12,9 @@ public class ItemBase extends Item implements IHasModel
 {
 	public ItemBase(String name) 
 	{
-			setUnlocalizedName(name);
+			setTranslationKey(name);
 			setRegistryName(name);
-			setCreativeTab(fracture.mod.Main.Crescentfallenitems);
+			setCreativeTab(CFMain.Crescentfallenitems);
 			
 			ItemInit.ITEMS.add(this);
 	}
@@ -22,6 +22,6 @@ public class ItemBase extends Item implements IHasModel
 	@Override
 	public void registerModels()
 	{
-		Main.proxy.registerItemRenderer(this, 0, "Inventory"); {}
+		CFMain.proxy.registerItemRenderer(this, 0, "Inventory"); {}
 	}
 }

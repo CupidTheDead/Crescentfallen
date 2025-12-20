@@ -5,8 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemBlockVariants extends ItemBlock
-{
+public class ItemBlockVariants extends ItemBlock {
 
 	public ItemBlockVariants(Block block) {
 		super(block);
@@ -15,16 +14,18 @@ public class ItemBlockVariants extends ItemBlock
 	}
 
 	@Override
-	public int getMetadata(int damage)
-	{	
+	public int getMetadata(int damage) {
 		return damage;
 	}
 	
+	//Damage is used in variants to determine what an item is.
+	
+//	@Override
+//	public String getUnlocalizedName(ItemStack stack) {
+//		return super.getTranslationKey() + "_" + ((IMetaName) this.block).getSpecialName(stack);
+//	}
 	@Override
-	public String getUnlocalizedName(ItemStack stack) 
-	{
-		return super.getUnlocalizedName() + "_" + ((IMetaName)this.block).getSpecialName(stack);
+	public String getTranslationKey(ItemStack stack) {
+	    return super.getTranslationKey() + "_" + ((IMetaName) this.block).getSpecialName(stack);
 	}
-	
-	
 }

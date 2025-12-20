@@ -2,7 +2,7 @@ package fracture.mod.init;
 
 import java.util.Random;
 
-import fracture.mod.Main;
+import fracture.mod.CFMain;
 import fracture.mod.util.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -11,15 +11,20 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 
 public class SpaceOreTanz extends Block implements IHasModel 
+
+
+//This section of code is not done..
+
+
 {
 	//public SpaceStone(Material materialIn) {
 	public SpaceOreTanz(String name, Material material) 
 	{
 
 		super(material);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName(name);
-		setCreativeTab(fracture.mod.Main.CrescentfallenBlocks);
+		setCreativeTab(CFMain.CrescentfallenBlocks);
 		setHardness(3.0f);
 		setResistance(3.0f);
 		setLightLevel(0.0f);
@@ -39,7 +44,7 @@ public class SpaceOreTanz extends Block implements IHasModel
 		
 		return ItemInit.TANZANITE;
 	}
-	//ABOVE IS USED IF YOU WANT A BLOCK TO DROP AN ITEM(ie Serotonin Shale drops seritonium nuggets)
+	//The statement above is used if you want a block to drop an item(i.e. serotonin shale drops seritonium nuggets)
 	
 	//	{
 	//	@Override
@@ -54,13 +59,13 @@ public class SpaceOreTanz extends Block implements IHasModel
 	//	{
 	//		return true;
 		//}
-	//ABOVE IS NON FUCTIONING, FIX THIS LATER	
+	//Statement above is non functional, fix this later
 		
 		
 	@Override
 	public void registerModels()
 	{
-		Main.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory"); {}
+		CFMain.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory"); {}
 	}
 
 }

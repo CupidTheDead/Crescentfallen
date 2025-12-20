@@ -13,8 +13,8 @@
     "screenshots": [],
     "dependencies": [
       "required-after:forge@[14.23.5.2847,)",
-      "required-after:galacticraftcore",
-      "required-after:galacticraftplanets"
+      "required-after:cgm",
+      "required-after:obfuscate"
     ]
   }
 ]

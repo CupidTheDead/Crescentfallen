@@ -1,6 +1,15 @@
 { 
     "parent": "block/cube_all",
     "textures": { 
-         "all": "fracture:blocks/overgrss_block"
+         "down":"fracture:blocks/dreamyard_dirt",
+        "up":"fracture:blocks/overgrass_full",
+        "north":"fracture:blocks/overgrss_block",
+        "east":"fracture:blocks/overgrss_block",
+        "south":"fracture:blocks/overgrss_block",
+        "west":"fracture:blocks/overgrss_block"
         }
 }
+
+
+
+

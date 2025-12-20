@@ -1,0 +1,7 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "fracture:blocks/hyacinth",
+    "particle": "fracture:blocks/hyacinth"
+  }
+}

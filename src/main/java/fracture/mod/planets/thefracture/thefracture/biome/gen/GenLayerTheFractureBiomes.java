@@ -1,6 +1,6 @@
 package fracture.mod.planets.thefracture.thefracture.biome.gen;
 
-import fracture.mod.init.AddonPlanets;
+import fracture.mod.init.CFplanets;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeAdaptive;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
@@ -8,7 +8,7 @@ import net.minecraft.world.gen.layer.IntCache;
 
 public class GenLayerTheFractureBiomes extends GenLayer {
 
-    private static final Biome[] biomes = BiomeAdaptive.getBiomesListFor(AddonPlanets.planetTwoS1).toArray(new Biome[0]);
+    private static final Biome[] biomes = BiomeAdaptive.getBiomesListFor(CFplanets.fracture).toArray(new Biome[0]);
 
     public GenLayerTheFractureBiomes(long l, GenLayer parent) {
         super(l);

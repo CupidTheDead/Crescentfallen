@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "top": "fracture:blocks/spacecraft_floor",
+    "bottom": "fracture:blocks/spacecraft_floor",
+    "side": "fracture:blocks/spacecraft_wall"
+  }
+}

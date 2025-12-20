@@ -7,8 +7,10 @@ import fracture.mod.planets.thefracture.thefracture.biome.gen.BiomeTheFractureMo
 import fracture.mod.planets.thefracture.thefracture.biome.gen.BiomeTheFracturePeaks;
 import fracture.mod.planets.thefracture.thefracture.biome.gen.BiomeTheFracturePlains;
 import fracture.mod.planets.thefracture.thefracture.biome.gen.BiomeTheFractureSea;
+import fracture.mod.world.chunk.ChunkProviderFractureBase;
 import fracture.mod.planets.thefracture.thefracture.biome.gen.BiomeTheFracturePiles;
 import micdoodle8.mods.galacticraft.api.world.BiomeGenBaseGC;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

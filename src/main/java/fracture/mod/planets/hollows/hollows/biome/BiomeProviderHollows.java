@@ -6,7 +6,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import fracture.mod.init.AddonPlanets;
+import fracture.mod.init.CFplanets;
 import fracture.mod.planets.hollows.hollows.biome.gen.GenLayerHollows;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeAdaptive;
@@ -29,7 +29,7 @@ public class BiomeProviderHollows extends BiomeProvider {
 	private CelestialBody body;
 
 	protected BiomeProviderHollows() {
-		this.body = AddonPlanets.planetOneS1;
+		this.body = CFplanets.hollows;
 		this.biomeCache = new BiomeCache(this);
 		this.biomesToSpawnIn = new ArrayList<>();
 	}

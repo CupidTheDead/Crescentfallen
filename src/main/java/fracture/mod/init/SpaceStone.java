@@ -1,6 +1,6 @@
 package fracture.mod.init;
 
-import fracture.mod.Main;
+import fracture.mod.CFMain;
 import fracture.mod.util.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -15,9 +15,9 @@ public class SpaceStone extends Block implements IHasModel
 	{
 
 		super(material);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName(name);
-		setCreativeTab(fracture.mod.Main.CrescentfallenBlocks);
+		setCreativeTab(CFMain.CrescentfallenBlocks);
 		setHardness(1.7f);
 		setResistance(6.0f);
 		setLightLevel(0.0f);
@@ -37,7 +37,8 @@ public class SpaceStone extends Block implements IHasModel
 		
 	//	return ItemInit.TANZANITE;
 	//}
-	//ABOVE IS USED IF YOU WANT A BLOCK TO DROP AN ITEM(ie Serotonin Shale drops seritonium nuggets)
+	//The statement above is used if you want a block to drop an item(i.e. serotonin shale drops seritonium nuggets)
+
 	
 	//	{
 	//	@Override
@@ -52,13 +53,13 @@ public class SpaceStone extends Block implements IHasModel
 	//	{
 	//		return true;
 		//}
-	//ABOVE IS NON FUCTIONING, FIX THIS LATER	
+	//Statement above is non functional, fix this later	
 		
 		
 	@Override
 	public void registerModels()
 	{
-		Main.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory"); {}
+		CFMain.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory"); {}
 	}
 
 }

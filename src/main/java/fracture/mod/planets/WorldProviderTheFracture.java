@@ -3,15 +3,14 @@ package fracture.mod.planets;
 import java.util.LinkedList;
 import java.util.List;
 
-import fracture.mod.AddonConfig;
-import fracture.mod.init.AddonDimensions;
-import fracture.mod.init.AddonPlanets;
+import fracture.mod.init.CFdimensions;
+import fracture.mod.init.CFplanets;
+import fracture.mod.CFConfig;
 import fracture.mod.init.BlockInit;
 import fracture.mod.planets.thefracture.ChunkProviderthefracture;
-import fracture.mod.planets.thefracture.SkyObjectTestTheFracture;
 import fracture.mod.planets.thefracture.SkyProviderthefracture;
 import fracture.mod.planets.thefracture.thefracture.biome.BiomeProviderTheFracture;
-import fracture.mod.world.chunk.ChunkProviderBase;
+import fracture.mod.world.chunk.ChunkProviderFractureBase;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeAdaptive;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.WorldProviderSpace;
@@ -25,71 +24,62 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.client.IRenderHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import scala.tools.nsc.interactive.Problem;
 
 public class WorldProviderTheFracture extends WorldProviderSpace implements IGalacticraftWorldProvider, ISolarLevel {
-			//added implement for IGalacticraftWorldProvider
+	// added implement for IGalacticraftWorldProvider
 
-	
-	
-	
-	
-	//this is 6/10/25
-	
-	
-	
-	//   protected void renderSky()
-	 //   {
-	 //       this.setSkyRenderer(new SkyProviderthefracture(this.getSolarSize()));
-	//    }
-	
-	   
-	   //the sky provider isent even refrenced here, or anywhere..
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	//public WorldProviderTheFracture() {
-	//	   this.setSkyRenderer(new SkyObjectTestTheFracture());
-	//	}
+	// 6/10/25
 
-	    	//ABOVE IS NEW CODE!! 6/3/2025
-	   // this is the Problem. its trying to render this code serverside, but it needs to be registered clientside.
-	   //you have created a test instance named 'skyobjecttestthefracture'
-	   //remember to replace the code for skyprovider the fracture with your own.
-	    //after you tried to put a box around yourself that followed the player and hung in the sky(and failed),
-	    //your ultiment goal was to create a box in the sky, which when the code you wrote for that did not work,
-	    //you moved on to trying to get a flat texture in the sky.
-	    //when that didnt work, you tried to get any change whatsoever out of the sky_provider.
-	    //no luck. dont even know if its set up correctly. it should be, ive quadruple checked and it
-	    //seems right? none of this shit works.
-	    
-	    //there are several other contained edits in client proxy, skyproviderthefracture, skyobjecttestthefracture.
-	    
-	    //https://github.com/MJRLegends/ExtraPlanets/blob/dev_1.12.2/src/main/java/com/mjr/extraplanets/planets/Saturn/WorldProviderSaturn.java
-	    //https://github.com/SteveKunG/MorePlanets/blob/b1874a7773f70af8cecff47b1bd434f47ac9a90d/src/main/java/stevekung/mods/moreplanets/core/event/WorldTickEventHandler.java#L49
-	    //https://github.com/Quatroctus/Blockstate-Generator/tree/master/BlockStateGen/src/dev/anime/blockstate/generator
-	    //https://forums.minecraftforge.net/topic/74316-using-custom-sky-graphics-sunmoon-textures-sizes-positions-etc/
-	    
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IRenderHandler getSkyRenderer() {
+		if (super.getSkyRenderer() == null) {
+			this.renderSky();
+		}
+		return super.getSkyRenderer();
+	}
+
+	protected void renderSky() {
+		this.setSkyRenderer(new SkyProviderthefracture(this));
+	}
 	
+	// https://github.com/MJRLegends/ExtraPlanets/blob/dev_1.12.2/src/main/java/com/mjr/extraplanets/planets/Saturn/WorldProviderSaturn.java
+	// https://github.com/SteveKunG/MorePlanets/blob/b1874a7773f70af8cecff47b1bd434f47ac9a90d/src/main/java/stevekung/mods/moreplanets/core/event/WorldTickEventHandler.java#L49
+	// https://github.com/Quatroctus/Blockstate-Generator/tree/master/BlockStateGen/src/dev/anime/blockstate/generator
+	// https://forums.minecraftforge.net/topic/74316-using-custom-sky-graphics-sunmoon-textures-sizes-positions-etc/
+
+	@Override
+	public IRenderHandler getCloudRenderer() {
+	    return null; 
+	}
+	
+	
+	
+		//zollorns
+	
+	 // public double getYCoordinateToTeleport() {
+	//	    return 150.0D;
+		//  }
+	  
+	  
+	  
+		//zollorns
+
+
+
+
 	@Override
 	public Vector3 getFogColor() {
 		return new Vector3(.5, .2, .0);
 	}
-	
 
 	@Override
 	public Vector3 getSkyColor() {
-		return new Vector3(.5, .2, .1);
+		return new Vector3(.2, .0, .0);
 	}
 
 	@Override
@@ -112,28 +102,32 @@ public class WorldProviderTheFracture extends WorldProviderSpace implements IGal
 		return 24000L;
 	}
 
+
 	@Override
 	public boolean shouldForceRespawn() {
 		return true;
 	}
 
-	//@Override
-	//public Class<? extends IChunkGenerator> getChunkProviderClass() {
-		//return ChunkProviderthefracture.class;
-        //return (Class<? extends IChunkGenerator>) ChunkProviderBase.class;
-    //}
-	
-    @Override
-    public Class<? extends IChunkGenerator> getChunkProviderClass() {
-    	return ChunkProviderthefracture.class;
-    	//if it doesn't work, change getChunkProviderClass to createChunkGenerator
-	}
+	// @Override
+	// public Class<? extends IChunkGenerator> getChunkProviderClass() {
+	// return ChunkProviderthefracture.class;
+	// return (Class<? extends IChunkGenerator>) ChunkProviderBase.class;
+	// }
 
 	@Override
+	public Class<? extends IChunkGenerator> getChunkProviderClass() {
+		return ChunkProviderthefracture.class;
+		// if it doesn't work, change getChunkProviderClass to createChunkGenerator
+	}
+
+	
+	//added 'CelestialBody'
+	@Override
 	public Class<? extends BiomeProvider> getBiomeProviderClass() {
-		BiomeAdaptive.setBodyMultiBiome(AddonPlanets.planetTwoS1);
+		BiomeAdaptive.setBodyMultiBiome((CelestialBody)CFplanets.fracture);
 		return BiomeProviderTheFracture.class;
 	}
+
 
 	@Override
 	public int getAverageGroundLevel() {
@@ -167,8 +161,8 @@ public class WorldProviderTheFracture extends WorldProviderSpace implements IGal
 
 	@Override
 	public boolean canSpaceshipTierPass(int tier) {
-		return tier >=3;
-		//return tier >= AddonConfig.addon_planet_settings.planetTwoTier;
+		//return tier >= 3;
+		return tier >= CFConfig.CF_planet_settings.planetTwoTier;
 	}
 
 	@Override
@@ -183,7 +177,7 @@ public class WorldProviderTheFracture extends WorldProviderSpace implements IGal
 
 	@Override
 	public CelestialBody getCelestialBody() {
-		return AddonPlanets.planetTwoS1;
+		return CFplanets.fracture;
 	}
 
 	@Override
@@ -218,7 +212,7 @@ public class WorldProviderTheFracture extends WorldProviderSpace implements IGal
 
 	@Override
 	public DimensionType getDimensionType() {
-		return AddonDimensions.dimPlanetTwoS1;
+		return CFdimensions.fractureDIM;
 	}
 
 	@Override
@@ -240,19 +234,16 @@ public class WorldProviderTheFracture extends WorldProviderSpace implements IGal
 	@Override
 	public List<Block> getSurfaceBlocks() {
 		List<Block> list = new LinkedList<>();
-		  list.add(BlockInit.SURFACE_FRACTURE);
-		  list.add(BlockInit.STONE_FRACTURE);
-		  list.add(BlockInit.DRIED_DIRT);
-		  list.add(Blocks.GRAVEL);
-		 list.add(MarsBlocks.marsBlock);
-		 list.add(Blocks.STONE);
-		 list.add(Blocks.COBBLESTONE_WALL);
-		 list.add(Blocks.MOSSY_COBBLESTONE);
-		 list.add(Blocks.OBSIDIAN);
-		 list.add(Blocks.MYCELIUM);
-		 //...
+		list.add(BlockInit.SURFACE_FRACTURE);
+		list.add(BlockInit.STONE_FRACTURE);
+		list.add(BlockInit.DRIED_DIRT);
+		list.add(Blocks.GRAVEL);
+		list.add(Blocks.STONE);
+		// ...
 		
+		//test
+		list.add(MarsBlocks.marsBlock);
+
 		return list;
 	}
 }
-

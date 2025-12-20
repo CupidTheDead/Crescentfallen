@@ -13,5 +13,8 @@ public class ItemInit {
 	public static final Item SERITONIUM_INGOT = new ItemBase("ingot_seritonium");
 	public static final Item TANZANITE = new ItemBase("tanzanite");
 	public static final Item FLAMINGO_FEATHER = new ItemBase("flamingo_feather");
+	
+	
+
 
 }

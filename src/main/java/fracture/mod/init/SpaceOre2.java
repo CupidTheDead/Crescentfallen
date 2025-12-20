@@ -1,8 +1,7 @@
 package fracture.mod.init;
 
 import net.minecraft.block.Block;
-
-import fracture.mod.Main;
+import fracture.mod.CFMain;
 import fracture.mod.util.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -17,9 +16,9 @@ public class SpaceOre2 extends Block implements IHasModel
 	{
 
 		super(material);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName(name);
-		setCreativeTab(fracture.mod.Main.CrescentfallenBlocks);
+		setCreativeTab(CFMain.CrescentfallenBlocks);
 		setHardness(3.0f);
 		setResistance(3.0f);
 		setLightLevel(0.0f);
@@ -36,8 +35,9 @@ public class SpaceOre2 extends Block implements IHasModel
 @Override
 public void registerModels()
 {
-	Main.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory"); {}
+	CFMain.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory"); {}
 }
 
 }
 	
+//Note: these need to be removed

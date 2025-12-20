@@ -6,7 +6,13 @@ import net.minecraft.item.ItemStack;
 
 public class CrescentfallenTabitems extends CreativeTabs
 {
-	public CrescentfallenTabitems(String label) { super("crescentfallentab");
-	this.setBackgroundImageName("crescentfallen.png"); }
-	public ItemStack getTabIconItem() { return new ItemStack(ItemInit.FLAMINGO_FEATHER);}
+    public CrescentfallenTabitems(String label) { 
+        super("crescentfallentab");
+        this.setBackgroundImageName("crescentfallen.png"); 
+    }
+
+    @Override
+    public ItemStack createIcon() { 
+        return new ItemStack(ItemInit.FLAMINGO_FEATHER);
+    }
 }

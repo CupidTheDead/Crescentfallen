@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "fracture:blocks/etherial_mushroom_purple"
+    }
+}

@@ -2,8 +2,11 @@ package fracture.mod.planets.hollows.hollows.biome;
 
 import java.util.Random;
 
-import fracture.mod.planets.hollows.hollows.biome.gen.BiomeHollowsPlains;
-import fracture.mod.planets.hollows.hollows.biome.gen.BiomeHollowsSea;
+import fracture.mod.planets.hollows.hollows.biome.gen.BiomeHollowsSpikes;
+import fracture.mod.planets.thefracture.thefracture.biome.gen.BiomeTheFracturePlains;
+import fracture.mod.init.BlockInit;
+import fracture.mod.planets.hollows.hollows.biome.gen.BiomeHollowsIceLakes;
+import fracture.mod.planets.hollows.hollows.biome.gen.BiomeHollowsSpikes;
 import micdoodle8.mods.galacticraft.api.world.BiomeGenBaseGC;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -11,76 +14,174 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biome.BiomeProperties;
 import net.minecraft.world.chunk.ChunkPrimer;
 
 public class HollowsBiomes extends BiomeGenBaseGC {
 
-	public static final Biome BiomeHollowsPlains = new BiomeHollowsPlains(new BiomeProperties("Hollows Plains").setBaseHeight(0.145F).setHeightVariation(0.5F).setRainfall(0.0F).setRainDisabled());
-	public static final Biome BiomeHollowsSea = new BiomeHollowsSea(new BiomeProperties("Hollows Sea").setBaseHeight(-1.1F).setHeightVariation(0.2F).setRainfall(0.0F).setRainDisabled());
+	public static final Biome BiomeHollowsSpikes = new BiomeHollowsSpikes(new BiomeProperties("Hollows Spikes").setBaseHeight(0.1F).setHeightVariation(0.026F).setRainfall(0.5F).setSnowEnabled());
+	public static final Biome BiomeHollowsIceLakes = new BiomeHollowsIceLakes(new BiomeProperties("Hollows Ice Lakes").setBaseHeight(-0.10F).setHeightVariation(0.07F).setRainfall(0.5F).setSnowEnabled());
 
-	public static final Biome[] biomes = {BiomeHollowsPlains, BiomeHollowsSea};
-	
-	//protected HollowsBiomes(BiomeProperties properties) {
-		protected HollowsBiomes(BiomeProperties properties) {
-			super(properties, true);
-		}
+    public static final Biome[] biomes = {BiomeHollowsSpikes,BiomeHollowsIceLakes};
+    
 
-		@Override
-		public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunk, int x, int z, double stoneNoise) {
-			generateBiomeTerrain(rand, chunk, x, z, stoneNoise);
-		}
+    protected HollowsBiomes(BiomeProperties properties) {
+        super(properties, true);
+    }
 
-		public final void generateBiomeTerrain(Random rand, ChunkPrimer chunk, int x, int z, double stoneNoise) {
-			IBlockState iblockstate = this.topBlock;
-			IBlockState iblockstate1 = this.fillerBlock;
-			int j = -1;
-			int k = (int) (stoneNoise / 3.0D + 3.0D + rand.nextDouble() * 5.25D);
-			int l = x & 15;
-			int i1 = z & 15;
-			BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+    @Override
+    public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunk, int x, int z, double stoneNoise) {
+        generateBiomeTerrain(world, rand, chunk, x, z, stoneNoise);
+    }
+    public final void generateBiomeTerrain(Random rand, ChunkPrimer chunk, int x, int z, double stoneNoise) {
+        IBlockState top = this.topBlock;
+        IBlockState filler = this.fillerBlock;
+        int depth = -1;
+        int k = (int)(stoneNoise / 3.0D + 3.0D + rand.nextDouble() * 0.25D); // lower variance for subtle layers
+        int l = x & 15;
+        int i1 = z & 15;
 
-			for (int j1 = 255; j1 >= 0; --j1) {
-				if (j1 <= rand.nextInt(5)) {
-					chunk.setBlockState(i1, j1, l, Blocks.BEDROCK.getDefaultState());
-				} else {
-					IBlockState iblockstate2 = chunk.getBlockState(i1, j1, l);
-					if (iblockstate2.getMaterial() == Material.AIR) {
-						j = -1;
-					} else if (iblockstate2.getBlock() == Blocks.GRASS.getDefaultState()) {
-						if (j == -1) {
-							if (k <= 0) {
-								iblockstate = null;
-								iblockstate1 = Blocks.COBBLESTONE.getDefaultState();
-							} else if (j1 >= 63 - 4 && j1 <= 63 + 1) {
-								iblockstate = this.topBlock;
-								iblockstate1 = this.fillerBlock;
-							}
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        
+        for (int y = 255; y >= 0; --y) {
+            if (y <= rand.nextInt(5)) {
+                chunk.setBlockState(i1, y, l, Blocks.BEDROCK.getDefaultState());
+            } else {
+                IBlockState current = chunk.getBlockState(i1, y, l);
+                if (current.getMaterial() == Material.AIR) {
+                    depth = -1;
+                } else if (current.getBlock() == BlockInit.STONE_HOLLOWS) {
+                    if (depth == -1) {
+                        // Detect biome border (neighboring biome mismatch)
+                        Biome centerBiome = this;
+                        //Biome west = world.getBiome(new BlockPos(x - 1, y, z));
+                       // Biome east = world.getBiome(new BlockPos(x + 1, y, z));
+                        //Biome north = world.getBiome(new BlockPos(x, y, z - 1));
+                        //Biome south = world.getBiome(new BlockPos(x, y, z + 1));
 
-							if (j1 < 63 && (iblockstate == null || iblockstate.getMaterial() == Material.AIR)) {
-								if (this.getTemperature(blockpos$mutableblockpos.setPos(x, j1, z)) < 0.15F) {
-									iblockstate = Blocks.ICE.getDefaultState();
-								} else {
-									iblockstate = Blocks.WATER.getDefaultState();
-								}
-							}
+                       // boolean isBorder = west != centerBiome || east != centerBiome || north != centerBiome || south != centerBiome;
 
-							j = k;
+                        //int heightBoost = isBorder ? 2 : 0;
 
-							if (j1 >= 63 - 1) {
-								chunk.setBlockState(i1, j1, l, iblockstate);
-							} else if (j1 < 63 - 7 - k) {
-								iblockstate = null;
-								iblockstate1 = Blocks.COBBLESTONE.getDefaultState();
-								chunk.setBlockState(i1, j1, l, Blocks.GRAVEL.getDefaultState());
-							} else {
-								chunk.setBlockState(i1, j1, l, iblockstate1);
-							}
-						} else if (j > 0) {
-							--j;
-							chunk.setBlockState(i1, j1, l, iblockstate1);
-						}
-					}
-				}
-			}
-		}
-	}
+                        depth = k;
+
+                        // Ice patches in ground
+                        if (y < 63 && rand.nextFloat() < 0.1F) {
+                            chunk.setBlockState(i1, y - 1, l, Blocks.PACKED_ICE.getDefaultState());
+                            if (rand.nextBoolean()) {
+                                chunk.setBlockState(i1, y - 2, l, Blocks.PACKED_ICE.getDefaultState());
+                            }
+                        }
+
+                        // Biome-specific terrain
+                        if (this == BiomeHollowsIceLakes) {
+                            top = Blocks.PACKED_ICE.getDefaultState();
+                            filler = Blocks.PACKED_ICE.getDefaultState();
+                        } else if (this == BiomeHollowsSpikes) {
+                            top = BlockInit.SURFACE_HOLLOWS.getDefaultState();
+                            filler = BlockInit.STONE_HOLLOWS.getDefaultState();
+                        }
+
+                        if (y < 63) {
+                            top = Blocks.PACKED_ICE.getDefaultState();
+                        }
+
+                        // Raise surface on border
+                        //chunk.setBlockState(i1, y + heightBoost, l, top);
+                    } else if (depth > 0) {
+                        --depth;
+                        chunk.setBlockState(i1, y, l, filler);
+                    }
+                }
+            }
+        }
+        
+    }}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        for (int y = 255; y >= 0; --y) {
+//            if (y <= rand.nextInt(5)) {
+//                chunk.setBlockState(i1, y, l, Blocks.BEDROCK.getDefaultState());
+//            } else {
+//                IBlockState current = chunk.getBlockState(i1, y, l);
+//                if (current.getMaterial() == Material.AIR) {
+//                    depth = -1;
+//                } else if (current.getBlock() == BlockInit.STONE_HOLLOWS) {
+//                    if (depth == -1) {
+//                        depth = k;
+//                        
+//                        //
+//                        // Add patches of ice blocks in the ground
+//                        if (y < 63 && rand.nextFloat() < 0.1F) {
+//                            chunk.setBlockState(i1, y - 1, l, Blocks.PACKED_ICE.getDefaultState());
+//                            if (rand.nextBoolean()) {
+//                                chunk.setBlockState(i1, y - 2, l, Blocks.PACKED_ICE.getDefaultState());
+//                            }
+//                        }
+//                        //
+//                        
+//                        // Check for biome specific terrain
+//                        if (this == BiomeHollowsIceLakes) {
+//                            top = Blocks.PACKED_ICE.getDefaultState();
+//                            filler = Blocks.PACKED_ICE.getDefaultState();
+//                        } else if (this == BiomeHollowsSpikes) {
+//                            top = BlockInit.SURFACE_HOLLOWS.getDefaultState();
+//                            filler = BlockInit.STONE_HOLLOWS.getDefaultState();
+//                        }
+//
+//                        if (y < 63) {
+//                            top = Blocks.PACKED_ICE.getDefaultState();
+//                        }
+//
+//                        chunk.setBlockState(i1, y, l, top);
+//                    } else if (depth > 0) {
+//                        --depth;
+//                        chunk.setBlockState(i1, y, l, filler);
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
