@@ -9,16 +9,19 @@ import fracture.mod.planets.WorldProviderHollows;
 import fracture.mod.planets.WorldProviderTheFracture;
 import fracture.mod.proxy.Proxy;
 import fracture.mod.tabs.CrescentfallenBlockstab;
+import fracture.mod.tabs.CrescentfallenGunstab;
 //import fracture.mod.tabs.CresentfallenTab;
 import fracture.mod.tabs.CrescentfallenTabitems;
 import fracture.mod.util.Reference;
 import fracture.mod.util.handlers.CameraTiltHandler;
 import fracture.mod.util.handlers.ConfigHandler;
+import fracture.mod.util.handlers.DiveHandler;
 import fracture.mod.util.handlers.DivePacket;
 import fracture.mod.util.handlers.FlowerSpawnHandler;
 import fracture.mod.util.handlers.KeybindHandler;
 import fracture.mod.util.handlers.PlayerMovementHandler;
 import fracture.mod.util.handlers.SlideCancelPacket;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -42,8 +45,12 @@ import micdoodle8.mods.galacticraft.core.util.WorldUtil;
 public class CFMain {
 
 	public static final CrescentfallenBlockstab CrescentfallenBlocks = new CrescentfallenBlockstab("crescentfallenblocks");
-	public static final CreativeTabs Crescentfallenitems = new CrescentfallenTabitems("crescentfallenitems");
-
+	public static final CreativeTabs CrescentfallenItems = new CrescentfallenTabitems("crescentfallenitems");
+	public static final CreativeTabs CrescentfallenGuns = new fracture.mod.tabs.CrescentfallenGunstab("crescentfallen_guns");
+	
+	
+	
+	
 	//I think most of the bloat here can be condensed and organized using the mod proxies? but this is the testing branch 
 	//and will be fixed later. note this down.
 	
@@ -94,7 +101,7 @@ public class CFMain {
 		// non functional; fix later.
 		//DimensionManager.registerDimension(dreamyardDIM, WorldProviderDreamyard.class);
 
-		
+		//MinecraftForge.EVENT_BUS.register(new DiveHandler());
 		
 		
 		//MOVEMENT SYSTEM TESTING
@@ -117,7 +124,7 @@ public class CFMain {
 	     // existing DivePacket registration (id 0)
 	     NETWORK.registerMessage(DivePacket.Handler.class, DivePacket.class, 0, Side.SERVER);
 
-	     // NEW: register SlideCancelPacket (id 1)
+	     // NEW: register SlideCancelPacket (id 1) (not working)
 	     NETWORK.registerMessage(SlideCancelPacket.Handler.class, SlideCancelPacket.class, 1, Side.SERVER);
 		
 	     
@@ -130,7 +137,6 @@ public class CFMain {
 	public void init(FMLInitializationEvent event) {
 
 		proxy.init(event);
-		// Call this in the preInit (make sure you register any blocks or items first)
 		// new AddonSolarSystems();
 		// new AddonPlanets();
 		// new AddonDimensions();
@@ -144,25 +150,25 @@ public class CFMain {
         }
 		
 		
-        	//this has to do with the dash HUD icon...
+        	//this has to do with the dash HUD icon (not working)
             if (event.getSide().isClient()) {
                 MinecraftForge.EVENT_BUS.register(new fracture.mod.util.handlers.HudOverlayHandler());
             }
             
-
-            
+          //TESTING 1/3/26
+            //fracture.mod.util.handlers.DiveHandler.register();
             
             //TESTING 9/21/25
             if (event.getSide().isClient()) {
                 KeybindHandler.register();   
                 MinecraftForge.EVENT_BUS.register(new fracture.mod.util.handlers.HudOverlayHandler());
-                // NEW: client-side slide visuals
+                // client-side slide visuals(not working)
                 MinecraftForge.EVENT_BUS.register(new fracture.mod.util.handlers.SlideClientHandler());
             }
 		//...
             
             
-            //alpha rose spawner
+            //alpha rose spawner(not working)
             MinecraftForge.EVENT_BUS.register(new FlowerSpawnHandler());
             
 	}

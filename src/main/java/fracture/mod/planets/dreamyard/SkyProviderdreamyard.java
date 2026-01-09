@@ -29,7 +29,7 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 public class SkyProviderdreamyard extends IRenderHandler {
 
     private static final ResourceLocation sunTexture = new ResourceLocation(CFInfo.ID, "textures/gui/celestialbodies/triopas.png");
-    private static final ResourceLocation planetBody = new ResourceLocation(CFInfo.ID, "textures/gui/celestialbodies/hollows.png");
+    private static final ResourceLocation hollowsDreamyardSky = new ResourceLocation(CFInfo.ID, "textures/gui/celestialbodies/hollows.png");
     private static final ResourceLocation dreamyardRing = new ResourceLocation(CFInfo.ID, "textures/gui/celestialbodies/dreamyard_ring.png");
     private static final ResourceLocation dreamyardBubble = new ResourceLocation(CFInfo.ID, "textures/gui/celestialbodies/dreamyard_bubble.png");
 
@@ -112,26 +112,25 @@ public class SkyProviderdreamyard extends IRenderHandler {
             GlStateManager.disableAlpha();
             GlStateManager.disableBlend();
 
-            // Draw sky quads (The base box)
+            // Draw sky quads
             GL11.glColor3f(0, 0, 0);
             GL11.glCallList(this.glSkyList);
 
-            // --- SKY COLOR LOGIC ---
+            // Sky color logic
             Vec3d vec3 = world.getSkyColor(mc.getRenderViewEntity(), partialTicks);
             float f1 = (float) vec3.x;
             float f2 = (float) vec3.y;
             float f3 = (float) vec3.z;
 
-            // Determine "Darkness" (0.0 = Noon, 1.0 = Midnight)
+            // Determine Darkness (0.0 = Noon, 1.0 = Midnight)
             float starBrightness = world.getStarBrightness(partialTicks);
 
-            // Target color (Dark Blue)
+            // Add Dark Blue
             float navyR = 0.0F;
             float navyG = 0.0F;
             float navyB = 0.1F; 
 
-            // Interpolate towards Navy based on darkness
-            // The brighter the stars (higher starBrightness), the more we shift to navy
+            // Interpolate color towards darker blue based on darkness
             f1 = f1 * (1.0F - starBrightness) + navyR * starBrightness;
             f2 = f2 * (1.0F - starBrightness) + navyG * starBrightness;
             f3 = f3 * (1.0F - starBrightness) + navyB * starBrightness;
@@ -164,13 +163,13 @@ public class SkyProviderdreamyard extends IRenderHandler {
             GlStateManager.disableTexture2D();
             GlStateManager.shadeModel(GL11.GL_SMOOTH);
 
-            // --- STARS RENDERING ---
+            // DYNAMICLY SPINNIN PARALAX STARS RENDERING BEGIN
             GlStateManager.pushMatrix();
             try {
                 long worldTime = world.getTotalWorldTime();
                 float celestialAngle = world.getCelestialAngle(partialTicks);
                 
-                // --- LAYER 1: Main Bright Stars ---
+                // Laver 1 Main Stars
                 GlStateManager.pushMatrix();
                 GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
                 GlStateManager.rotate(celestialAngle * 360.0F, 1.0F, 0.0F, 0.0F);
@@ -179,7 +178,7 @@ public class SkyProviderdreamyard extends IRenderHandler {
                 GL11.glCallList(this.starList);
                 GlStateManager.popMatrix();
 
-                // --- LAYER 2: Parallax Faded Stars ---
+                // Laver 2 Stars 
                 GlStateManager.pushMatrix();
                 GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F); 
                 GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
@@ -211,12 +210,19 @@ public class SkyProviderdreamyard extends IRenderHandler {
                 float f7 = afloat[1];
                 float f8 = afloat[2];
 
+                // --- FIX: USE ADDITIVE BLENDING FOR AURA ---
+                GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+                
                 // Sun Aura Fans
-                float auraAlpha = 1.0F; 
+                // Lower alpha slightly for additive blend so it isn't blindingly white
+                float auraAlpha = 0.4F; 
+                
                 worldRenderer1.begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);
-                float r = f6; float g = f7; float b = f8; float a = afloat[3] * 2;
-                worldRenderer1.pos(0.0D, 100.0D, 0.0D).color(r, g, b, a).endVertex();
-                r = afloat[0]; g = afloat[1]; b = afloat[2]; a = 0.0F;
+                // Center color
+                worldRenderer1.pos(0.0D, 100.0D, 0.0D).color(f6, f7, f8, auraAlpha).endVertex();
+                
+                // Outer color (fade to transparent)
+                float r = afloat[0]; float g = afloat[1]; float b = afloat[2]; float a = 0.0F;
                 float f10 = 20.0F;
                 
                 // Fan 1
@@ -231,10 +237,10 @@ public class SkyProviderdreamyard extends IRenderHandler {
                 worldRenderer1.pos(-f10, 100.0D, -f10).color(r, g, b, a).endVertex();
                 tessellator1.draw();
                 
-                // Fan 2
+                // Fan 2 (Larger outer glow)
                 worldRenderer1.begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);
-                r = f6; g = f7; b = f8; a = afloat[3];
-                worldRenderer1.pos(0.0D, 100.0D, 0.0D).color(r, g, b, a).endVertex();
+                worldRenderer1.pos(0.0D, 100.0D, 0.0D).color(f6, f7, f8, auraAlpha * 0.5F).endVertex();
+                
                 r = afloat[0]; g = afloat[1]; b = afloat[2]; a = 0.0F;
                 f10 = 40.0F;
                 worldRenderer1.pos(-f10, 100.0D, -f10).color(r, g, b, a).endVertex();
@@ -248,23 +254,14 @@ public class SkyProviderdreamyard extends IRenderHandler {
                 worldRenderer1.pos(-f10, 100.0D, -f10).color(r, g, b, a).endVertex();
                 tessellator1.draw();
 
+                // --- RESET BLEND FUNC FOR TEXTURE ---
+                GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
                 // Sun Texture Body
                 GlStateManager.shadeModel(GL11.GL_FLAT);
                 GlStateManager.enableTexture2D();
-                OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE, GL11.GL_ZERO);
                 
-                // Backing quad
-                GlStateManager.disableTexture2D();
-                f10 = this.sunSize / 3.5F;
-                worldRenderer1.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
-                worldRenderer1.pos(-f10, 99.9D, -f10).endVertex();
-                worldRenderer1.pos(f10, 99.9D, -f10).endVertex();
-                worldRenderer1.pos(f10, 99.9D, f10).endVertex();
-                worldRenderer1.pos(-f10, 99.9D, f10).endVertex();
-                tessellator1.draw();
-
                 // Texture quad
-                GlStateManager.enableTexture2D();
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 f10 = this.sunSize;
                 mc.renderEngine.bindTexture(SkyProviderdreamyard.sunTexture);
@@ -279,39 +276,25 @@ public class SkyProviderdreamyard extends IRenderHandler {
                 GlStateManager.popMatrix(); 
             }
 
-            // --- PINK RAINBOW RIBBON ---
+            // PINK RAINBOW PLANETARY RING BASE
             GlStateManager.pushMatrix();
             try {
-                long worldTime = world.getTotalWorldTime();
-                float celestialAngle = world.getCelestialAngle(partialTicks);
-                // Rotate the ring around the skybox per day
-                GlStateManager.rotate(celestialAngle * 360.0F, 0.0F, 0.0F, 1.0F); 
+                // Removed rotation so it stays flat with horizon
                 double ribbonX = 0.0D; 
                 double ribbonY = 0.0D; 
                 double ribbonZ = 0.0D; 
-                this.renderPinkRainbowRibbon(partialTicks, worldTime, 1.0F, ribbonX, ribbonY, ribbonZ);
+                // Passed 0 worldTime
+                
+                this.renderPinkRainbow(partialTicks, 0, 1.0F, ribbonX, ribbonY, ribbonZ);
             } finally {
                 GlStateManager.popMatrix();
             }
             
-            // --- SUNSET RIBBON ---
+            // SUNSET RIBBONS
             GlStateManager.pushMatrix();
             GlStateManager.rotate(5.0F, 1.0F, 0.0F, 0.0F); 
-            this.renderSunsetRibbon(partialTicks, world.getTotalWorldTime(), 1.0F);
+            this.renderSunset(partialTicks, world.getTotalWorldTime(), 1.0F);
             GlStateManager.popMatrix();
-
-//            // --- NIGHT WAVE SPHERE (Blue Waves at Night) ---
-//            // Only render if it is dark enough
-//            if (starBrightness > 0.0F) {
-//                GlStateManager.pushMatrix();
-//                // Slowly rotate the wave sphere
-//                float waveRotation = (float)(world.getTotalWorldTime() % 7200L) / 20.0F; 
-//                GlStateManager.rotate(waveRotation, 0.0F, 1.0F, 0.0F);
-//                this.renderNightWaveSphere(partialTicks, world.getTotalWorldTime(), starBrightness);
-//                GlStateManager.popMatrix();
-//            }
-
-            // Reset states before object rendering
             GlStateManager.enableAlpha();
             GlStateManager.disableBlend();
             GlStateManager.depthMask(true);
@@ -333,7 +316,7 @@ public class SkyProviderdreamyard extends IRenderHandler {
             GlStateManager.enableTexture2D();
             mc.renderEngine.bindTexture(dreamyardRing);
 
-            // Ring always visible
+
             GlStateManager.color(1F, 1F, 1F, 0.8F); 
             GlStateManager.rotate(timeDegrees * 0.1F, 0.0F, 1.0F, 0.0F);
 
@@ -400,11 +383,12 @@ public class SkyProviderdreamyard extends IRenderHandler {
                 GlStateManager.popMatrix();
             }
 
-            // Planet body Hollows
+            // RENDER HOLLOWS
             GlStateManager.pushMatrix();
             try {
-                GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F); // Orient North
-                GlStateManager.rotate(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F); // Celestial Rotation
+            	//Changed rotation
+                GlStateManager.rotate(34.0F, 0.0F, 1.0F, 0.0F);
+                GlStateManager.rotate(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
                 GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
                 
                 float planetScale = 10.0F;
@@ -415,7 +399,7 @@ public class SkyProviderdreamyard extends IRenderHandler {
                 GlStateManager.rotate(180F, 0.0F, 0.0F, 1.0F); 
                 
                 GlStateManager.enableTexture2D();
-                mc.renderEngine.bindTexture(planetBody);
+                mc.renderEngine.bindTexture(hollowsDreamyardSky);
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
                 buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
@@ -513,18 +497,18 @@ public class SkyProviderdreamyard extends IRenderHandler {
     }
 
     private void updateAndRenderShootingStars(Tessellator tess, BufferBuilder buffer, float dt) {
-        // 1. Spawning (Rare chance)
+        // 1. Spawning 
         // Adjust probability: 0.005 chance per frame ~ 3 seconds on 60fps
         if (this.starRandom.nextFloat() < 0.01F) { 
             double theta = this.starRandom.nextDouble() * Math.PI * 2.0;
             double phi = this.starRandom.nextDouble() * Math.PI; // Full sphere coverage
-            double radius = 90.0D; // Just inside skybox
+            double radius = 90.0D; // interior skybox
             
             double sx = Math.sin(phi) * Math.cos(theta) * radius;
             double sy = Math.cos(phi) * radius;
             double sz = Math.sin(phi) * Math.sin(theta) * radius;
             
-            // Velocity: Pick a random destination on the sphere
+            // Velocity: Picks random destination on the sphere
             double destTheta = this.starRandom.nextDouble() * Math.PI * 2.0;
             double destPhi = this.starRandom.nextDouble() * Math.PI;
             double ex = Math.sin(destPhi) * Math.cos(destTheta) * radius;
@@ -545,7 +529,7 @@ public class SkyProviderdreamyard extends IRenderHandler {
         GlStateManager.pushMatrix();
         GlStateManager.disableTexture2D();
         GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE); // Additive blending
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
         
         buffer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
         
@@ -586,7 +570,7 @@ public class SkyProviderdreamyard extends IRenderHandler {
         GlStateManager.popMatrix();
     }
 
-//    // --- NIGHT WAVE SPHERE ---
+//    // NIGHT SPHERE
 //    private void renderNightWaveSphere(float partialTicks, long worldTime, float nightStrength) {
 //        GlStateManager.disableTexture2D();
 //        GlStateManager.enableBlend();
@@ -644,8 +628,8 @@ public class SkyProviderdreamyard extends IRenderHandler {
 //        GlStateManager.enableTexture2D();
 //    }
     
-    // ... existing renderPinkRainbowRibbon ...
-    private void renderPinkRainbowRibbon(float partialTicks, long worldTime, float brightness, double x, double y, double z) {
+    // Render Pink Rainbow independent code
+    private void renderPinkRainbow(float partialTicks, long worldTime, float brightness, double x, double y, double z) {
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
         GlStateManager.disableTexture2D();
@@ -659,32 +643,35 @@ public class SkyProviderdreamyard extends IRenderHandler {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
 
-        double time = (worldTime + partialTicks) * 0.02D;
-        double radius = 60.0D; 
-        double ribbonWidth = 30.0D; 
+        // Geometry
+        double innerRadius = 60.0D; 
+        double outerRadius = 90.0D; 
+        
+        // Ring time logic used to be here
         
         buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
 
         int steps = 180;
         for (int i = 0; i <= steps; i++) {
             double angle = (double)i / (double)steps * (Math.PI * 2.0);
-            double topWave = Math.sin(angle * 3.0 + time) * 5.0;
-            double bottomWave = Math.cos(angle * 4.0 - time * 0.5) * 5.0;
             
-            double xPos = Math.cos(angle) * radius;
-            double zPos = Math.sin(angle) * radius;
+            // Calculate Inner Position (flat on XZ plane, y=0)
+            double xIn = Math.cos(angle) * innerRadius;
+            double zIn = Math.sin(angle) * innerRadius;
             
-            double topY = (ribbonWidth / 2) + topWave;
-            double bottomY = -(ribbonWidth / 2) + bottomWave;
+            // Calculate Outer Position
+            double xOut = Math.cos(angle) * outerRadius;
+            double zOut = Math.sin(angle) * outerRadius;
 
-            double hue = 0.85 + (Math.sin(angle * 2.0 + time * 0.1) * 0.15); 
+            double hue = 0.85 + (Math.sin(angle * 2.0) * 0.15); 
             int color = java.awt.Color.HSBtoRGB((float)hue, 0.6f, 1.0f);
             float r = ((color >> 16) & 0xFF) / 255.0F;
             float g = ((color >> 8) & 0xFF) / 255.0F;
             float b = (color & 0xFF) / 255.0F;
 
-            buffer.pos(xPos, topY, zPos).color(r, g, b, 0.0F).endVertex(); 
-            buffer.pos(xPos, bottomY, zPos).color(r, g, b, 0.5F * brightness).endVertex(); 
+            buffer.pos(xIn, 0.0D, zIn).color(r, g, b, 0.5F * brightness).endVertex();
+            
+            buffer.pos(xOut, 0.0D, zOut).color(r, g, b, 0.0F).endVertex(); 
         }
 
         tessellator.draw();
@@ -696,8 +683,9 @@ public class SkyProviderdreamyard extends IRenderHandler {
         GlStateManager.popMatrix();
     }
     
-    // ... existing renderSunsetRibbon ...
-    private void renderSunsetRibbon(float partialTicks, long worldTime, float brightness) {
+    // Render Sunset independent code
+    
+    private void renderSunset(float partialTicks, long worldTime, float brightness) {
         GlStateManager.pushMatrix();
         GlStateManager.disableTexture2D();
         GlStateManager.enableBlend();
@@ -757,6 +745,7 @@ public class SkyProviderdreamyard extends IRenderHandler {
         GlStateManager.popMatrix();
     }
 
+    //Misc
     public float getSkyBrightness(float par1) {
         final float var2 = FMLClientHandler.instance().getClient().world.getCelestialAngle(par1);
         float var3 = 1.0F - (MathHelper.sin(var2 * Constants.twoPI) * 2.0F + 0.25F);

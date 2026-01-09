@@ -560,8 +560,7 @@ public class SkyProviderHollows extends IRenderHandler {
 		
 		 //BEGIN
         
-        
-	     // REQUIRED variables (you must define these beforehand):
+         //Required variables
 	     // float celAng;                        // Celestial angle [0.0, 1.0]
 	     // float y0 = ...;                      // Base Y offset for the ring
 	     // float y = ...;                       // Height of the rainbow ring
@@ -620,7 +619,7 @@ public class SkyProviderHollows extends IRenderHandler {
 	     buffer7.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 
 	     
-	  // Define parameters for the rainbow ring
+	  // Define Halo parameters
 	     int angles = 64;                // Number of vertical ring segments
 	     float anglePer = 360F / angles; // Degrees per segment
 	     float uPer = 1.0F / angles;     // Texture step for UVs
@@ -778,7 +777,7 @@ public class SkyProviderHollows extends IRenderHandler {
         
         //render object end, Helius
         
-        System.out.println("[SkyProvider] Rendered Helius at " + planetDistanceZ + " units distance and scale " + planetScale);
+        //System.out.println("[SkyProvider] Rendered Helius at " + planetDistanceZ + " units distance and scale " + planetScale);
     
 		
 		
@@ -795,7 +794,6 @@ public class SkyProviderHollows extends IRenderHandler {
 	     
         
         
-//RED CLOUD LAYER RENDER USED TO BE HERE, CHECH DISCORD FOR CODE OR ASK ME IF YOU ARE NOT ME. CUPID
         
         
         
@@ -862,7 +860,7 @@ public class SkyProviderHollows extends IRenderHandler {
         GL11.glEnable(GL11.GL_FOG);
         GL11.glPopMatrix();
 
-        System.out.println("[SkyProvider] Rendered side-facing, spinning inner sky sphere.");
+        //System.out.println("[SkyProvider] Rendered side-facing, spinning inner sky sphere.");
         //END
         
 //		

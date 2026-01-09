@@ -14,7 +14,7 @@ public class ItemBase extends Item implements IHasModel
 	{
 			setTranslationKey(name);
 			setRegistryName(name);
-			setCreativeTab(CFMain.Crescentfallenitems);
+			setCreativeTab(CFMain.CrescentfallenItems);
 			
 			ItemInit.ITEMS.add(this);
 	}

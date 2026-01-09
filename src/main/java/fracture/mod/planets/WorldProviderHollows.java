@@ -65,9 +65,15 @@ public class WorldProviderHollows extends WorldProviderSpace implements ISolarLe
 	protected void setCloudRenderer() {
 		if (super.getCloudRenderer() == null)
         this.setCloudRenderer(new CloudsHollows());
+		//non functional
+    }
+    @Override
+    public boolean canRainOrSnow() {
+        return true;
     }
     public boolean canDoRainSnowIce(Chunk chunk) {
         return canRainOrSnow();
+        //return true;
       }
 	
 
@@ -169,14 +175,9 @@ public class WorldProviderHollows extends WorldProviderSpace implements ISolarLe
     public float getThermalLevelModifier() {
         return 0.0F;
     }
-
-    @Override
-    public boolean canRainOrSnow() {
-        return true;
-    }
     //@Override
     public boolean doesSnowGenerate() {
-        return true;
+        return false;
     }
     
     @Override

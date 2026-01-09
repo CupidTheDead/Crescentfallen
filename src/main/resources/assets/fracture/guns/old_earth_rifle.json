@@ -1,0 +1,25 @@
+{
+    "id": "old_earth_rifle",
+    "general": {
+        "auto": true,
+        "rate": 2,
+        "gripType": "two_handed", 
+        "maxAmmo": 30,
+        "reloadSpeed": 20, 
+        "recoilKick": 0.5
+    },
+    "projectile": {
+        "item": "cgm:basic_ammo", 
+        "visible": true,
+        "damage": 10.0,
+        "size": 0.5,
+        "speed": 60,
+        "life": 673,
+        "gravity": true
+    },
+    "sounds": {
+        "fire": "cgm:item.assault_rifle.fire",
+        "reload": "cgm:item.assault_rifle.reload",
+        "cock": "cgm:item.assault_rifle.cock"
+    }
+}

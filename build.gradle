@@ -83,6 +83,8 @@ dependencies {
   	
   	deobfCompile "curse.maven:industrial-craft-242638:3078604"
   	
+  	deobfCompile "curse.maven:geckolib-388172:3627498"
+  	
 	//deobfCompile "curse.maven:buildcraft-"
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

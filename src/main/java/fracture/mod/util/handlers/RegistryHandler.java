@@ -7,8 +7,10 @@ import fracture.mod.planets.WorldProviderTheFracture;
 import fracture.mod.util.IHasModel;
 import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -37,6 +39,12 @@ public class RegistryHandler
 			{
 				((IHasModel)item).registerModels();
 			}
+			
+			//ADDED ELSE BLOCK GUNS TESTING
+			else {
+	             ModelLoader.setCustomModelResourceLocation(item, 0, 
+	                 new ModelResourceLocation(item.getRegistryName(), "inventory"));
+	        }
 		}
 		
 		for(Block block : BlockInit.BLOCKS)

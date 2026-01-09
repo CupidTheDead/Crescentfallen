@@ -22,6 +22,13 @@ public class HollowsBiomes extends BiomeGenBaseGC {
 	public static final Biome BiomeHollowsSpikes = new BiomeHollowsSpikes(new BiomeProperties("Hollows Spikes").setBaseHeight(0.1F).setHeightVariation(0.026F).setRainfall(0.5F).setSnowEnabled());
 	public static final Biome BiomeHollowsIceLakes = new BiomeHollowsIceLakes(new BiomeProperties("Hollows Ice Lakes").setBaseHeight(-0.10F).setHeightVariation(0.07F).setRainfall(0.5F).setSnowEnabled());
 
+	// ADDED .setTemperature(0.0F)
+    //public static final Biome BiomeHollowsSpikes = new BiomeHollowsSpikes(new BiomeProperties("Hollows Spikes").setBaseHeight(0.1F).setHeightVariation(0.026F).setRainfall(0.5F).setTemperature(0.0F).setSnowEnabled());
+    //public static final Biome BiomeHollowsIceLakes = new BiomeHollowsIceLakes(new BiomeProperties("Hollows Ice Lakes").setBaseHeight(-0.10F).setHeightVariation(0.07F).setRainfall(0.5F).setTemperature(0.0F).setSnowEnabled());
+	
+	
+	
+	
     public static final Biome[] biomes = {BiomeHollowsSpikes,BiomeHollowsIceLakes};
     
 

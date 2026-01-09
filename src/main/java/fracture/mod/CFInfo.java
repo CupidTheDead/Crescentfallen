@@ -15,43 +15,6 @@ public final class CFInfo {
 
 }
 
-// Things that are currently being worked on in this mod project:
-
-//Updating to galacticraft legacy jar
-//Better understand custom dims and how they work
-//the sky, specifically creating skies for all the different dims
-//Ore gen on planets
-//Biome decorator code and general planet decorations
-//Adding a bunch of different blocks and fauna
-//Code for creating multiple planets with separate world gen and decor
-//Structures and structure generation
-//Functioning space stations(very low priority)
-//Custom Entities
-//Configuration file
-
-
-
-//make a dolphin bazooka
-//model the orbital lazers atherians use to kill people on the surface
-//make a hl2 rocket launcher
-//comebine them in an array to make a giant set of manual load rocket pods(every 2 minutes reload)
-//make a regular ass GL(single)
-//make a flat belt fed tacticoolGL that inserts from the left with open gernade clips where the shell flies off after fired
-//make a shotgun conversion kit
-//make a landmine
-//make grenades(alien, human, and nuclear)
-//make impacts
-//make claymorores cause fuck it why not
-
-
-
-
-
-
-
-
-
-
 
 // Tutorials and other adjacent idea mods with documentation:
 
@@ -63,6 +26,13 @@ public final class CFInfo {
 //Advanced Rocketry(Reference for advanced sky objects): https://github.com/Advanced-Rocketry/AdvancedRocketry
 //Botania 1.12.2 (Reference for advanced sky objects and other metaphysical things): https://github.com/VazkiiMods/Botania/tree/1.12-final
 //Dynamic surroundings 1.12.2(Reference for advanced sky objects): https://github.com/OreCruncher/DynamicSurroundings/tree/1.12.2
+
+//Mrcrayfishesgunmod:
+//Obfuscate:
+//MrcrayfishDartmod:
+
+//Geckolib:
+//Ice & Fire:
 
 //Galacticraft basic RO(Read-Only) tutorial: https://github.com/ReadOnlyDevelopment/Galacticraft-Addon-Tutorial
 //Dim tutorial reference: https://github.com/DaRealTurtyWurty/Tutorial-Mod/tree/master/src/main/java/com/tutorialmod/turtywurty/world/overworldTemplate

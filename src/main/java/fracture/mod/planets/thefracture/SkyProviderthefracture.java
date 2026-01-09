@@ -27,7 +27,7 @@ public class SkyProviderthefracture extends IRenderHandler {
 
     private static final ResourceLocation sunTexture = new ResourceLocation(CFInfo.ID, "textures/gui/celestialbodies/triopas.png");
     private static final ResourceLocation konaFractureSky = new ResourceLocation(CFInfo.ID, "textures/gui/celestialbodies/kona.png");
-    private static final ResourceLocation smokeTexture = new ResourceLocation("textures/environment/clouds.png");
+    private static final ResourceLocation fractureClouds = new ResourceLocation("textures/environment/clouds.png");
 
     public int starList;
     public int glSkyList;
@@ -57,7 +57,7 @@ public class SkyProviderthefracture extends IRenderHandler {
         final Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder worldRenderer = tessellator.getBuffer();
 
-        // 2. COMPILE SKY BOX (UP)
+        // 2. COMPILE SKYBOX UP
         GL11.glNewList(this.glSkyList, GL11.GL_COMPILE);
         final byte byte2 = 64;
         final int i = 256 / byte2 + 2;
@@ -75,7 +75,7 @@ public class SkyProviderthefracture extends IRenderHandler {
         }
         GL11.glEndList();
 
-        // 3. COMPILE SKY BOX (DOWN)
+        // 3. COMPILE SKYBOX DOWN
         GL11.glNewList(this.glSkyList2, GL11.GL_COMPILE);
         f = -16F;
         worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
@@ -107,7 +107,7 @@ public class SkyProviderthefracture extends IRenderHandler {
             GlStateManager.enableFog();
             GlStateManager.color(1F, 1F, 1F);
 
-            // --- 1. RENDER DARK BACKGROUND ---
+            // RENDER DARK BACKGROUND
             GlStateManager.color(0, 0, 0);
             GL11.glCallList(this.glSkyList);
             
@@ -134,9 +134,9 @@ public class SkyProviderthefracture extends IRenderHandler {
             GlStateManager.disableAlpha();
             RenderHelper.disableStandardItemLighting();
 
-            // --- 2. RENDER STARS ---
+            // RENDER STARS
             float starBrightness = world.getStarBrightness(partialTicks);
-            // MODIFICATION: Reduced minimum brightness to 0.05F (very dim during day)
+            // Reduced minimum brightness to 0.05F (dim during day)
             float renderStarBrightness = Math.max(starBrightness, 0.05F);
             
             if (renderStarBrightness > 0.0F) {
@@ -157,7 +157,7 @@ public class SkyProviderthefracture extends IRenderHandler {
                 GlStateManager.popMatrix();
             }
 
-            // --- 3. RENDER SUN & AURA ---
+            // RENDER SUN & AURA
             GlStateManager.pushMatrix();
             // ROTATION
             GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
@@ -186,7 +186,7 @@ public class SkyProviderthefracture extends IRenderHandler {
             
             double auraDistance = 100.0D;
             
-            // Center of Aura with translucency
+            // Center of Aura translucent
             worldRenderer.pos(0.0D, auraDistance, 0.0D).color(afloat[0], afloat[1], afloat[2], afloat[3] * 2 * sunBright * sunAlpha).endVertex();
             
             // Edges of Aura
@@ -205,7 +205,8 @@ public class SkyProviderthefracture extends IRenderHandler {
             tessellator.draw();
             GlStateManager.shadeModel(GL11.GL_FLAT);
 
-            // RENDER MAIN SUN TEXTURE with translucency
+            // RENDER SUN TEXTURE
+            // Manual transparency 
             GlStateManager.enableTexture2D(); 
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.color(1.0F, 1.0F, 1.0F, sunAlpha);
@@ -224,13 +225,13 @@ public class SkyProviderthefracture extends IRenderHandler {
             GlStateManager.enableCull(); 
             GlStateManager.popMatrix(); 
             
-            // --- METEORS ---
+            // METEORS
             this.updateAndRenderMeteors(deltaTime);
             
-            // --- SMOKE CLOUD LAYER ---
+            // CLOUD LAYER
             this.renderSmokeLayer(world.getTotalWorldTime(), partialTicks);
 
-            // --- 4. RENDER CUSTOM PLANET (KONA) ---
+            // RENDER KONA
             GlStateManager.pushMatrix();
             GlStateManager.rotate(34.0F, 0.0F, 1.0F, 0.0F);
             GlStateManager.rotate(200F, 1.0F, 0.0F, 0.0F);
@@ -342,14 +343,13 @@ public class SkyProviderthefracture extends IRenderHandler {
         GlStateManager.pushMatrix();
         GlStateManager.enableTexture2D();
         GlStateManager.enableBlend();
-        // Standard blending
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GlStateManager.depthMask(false);
         
         double scrollSpeed = worldTime % 24000L / 12000.0D; 
         double scrollX = scrollSpeed + (partialTicks / 12000.0D);
         
-        Minecraft.getMinecraft().renderEngine.bindTexture(smokeTexture);
+        Minecraft.getMinecraft().renderEngine.bindTexture(fractureClouds);
         
         Tessellator tess = Tessellator.getInstance();
         BufferBuilder buff = tess.getBuffer();
@@ -360,7 +360,7 @@ public class SkyProviderthefracture extends IRenderHandler {
         GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F); 
         GlStateManager.translate(0.0, -height, 0.0);
         
-        // MODIFICATION: Render smoke in a grid to fade out edges (dither)
+        // Render clouds in a grid to fade out edges (dithering)
         buff.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
         
         double repeats = 4.0D;
@@ -376,9 +376,8 @@ public class SkyProviderthefracture extends IRenderHandler {
                 double z2 = z1 + segmentSize;
                 
                 // Calculate distance from center (0,0) for each vertex
-                // We use the center point of the quad to approximate alpha for the whole quad
-                // Or calculate per vertex for smoother gradient
-                
+                // Use the center point of the quad to approximate alpha for the whole quad
+
                 // Colors
                 float r = 0.2F;
                 float g = 0.15F;
@@ -386,7 +385,6 @@ public class SkyProviderthefracture extends IRenderHandler {
                 float maxAlpha = 0.4F;
                 
                 // Helper to get alpha based on distance
-                // At 0 dist, alpha = maxAlpha. At 'size' dist, alpha = 0.
                 
                 float a1 = getCloudAlpha(x1, z1, size, maxAlpha);
                 float a2 = getCloudAlpha(x1, z2, size, maxAlpha);
@@ -435,7 +433,7 @@ public class SkyProviderthefracture extends IRenderHandler {
         float r, g, b;    
         float size;
         
-        // MODIFICATION: Lifespan logic
+        // Meteor Lifespan logic
         float age = 0;
         float maxAge;
         
@@ -453,7 +451,7 @@ public class SkyProviderthefracture extends IRenderHandler {
             this.b = 0.2F;
             this.size = 2.0F + r.nextFloat() * 3.0F;
             
-            // MODIFICATION: Reduced max age to 1.0-2.5 seconds
+            // Reduced max age of meteor to 1.0-2.5 seconds
             this.maxAge = 1.0F + r.nextFloat() * 1.5F;
         }
     }
@@ -481,13 +479,13 @@ public class SkyProviderthefracture extends IRenderHandler {
             m.angle += m.speed * deltaTime;
             m.age += deltaTime;
             
-            // MODIFICATION: Remove if too old
+            // Remove if too old
             if (m.age > m.maxAge) {
                 it.remove();
                 continue;
             }
             
-            // Calculate Fade based on Age (Fade In / Fade Out)
+            // Calculate fade based on age
             float lifeRatio = m.age / m.maxAge;
             // Sine wave fade: Starts at 0, goes to 1, ends at 0
             float lifeAlpha = (float) Math.sin(lifeRatio * Math.PI);

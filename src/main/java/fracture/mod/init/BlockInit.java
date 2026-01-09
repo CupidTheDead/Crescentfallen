@@ -120,15 +120,15 @@ public class BlockInit
 	//public static final Block ORE_DREAMYARD = new BlockOres("ore_dreamyard", CF.dreamyardDIM);
 	
 	//the fracture
-	public static final Block ORE_FRACTURE_URANIUM = new SpaceOre2("ore_fracture_uranium", Material.ROCK);
-	public static final Block ORE_FRACTURE_IRON = new SpaceOre1("ore_fracture_iron", Material.ROCK);
-	public static final Block ORE_FRACTURE_TIN = new SpaceOre1("ore_fracture_tin", Material.ROCK);
-	public static final Block ORE_FRACTURE_COPPER = new SpaceOre1("ore_fracture_copper", Material.ROCK);
+	public static final Block ORE_FRACTURE_URANIUM = new SpaceOre0("ore_fracture_uranium", Material.ROCK);
+	public static final Block ORE_FRACTURE_IRON = new SpaceOre0("ore_fracture_iron", Material.ROCK);
+	public static final Block ORE_FRACTURE_TIN = new SpaceOre0("ore_fracture_tin", Material.ROCK);
+	public static final Block ORE_FRACTURE_COPPER = new SpaceOre0("ore_fracture_copper", Material.ROCK);
 	
 	//kona
-	public static final Block ORE_KONA_COPPER = new SpaceOre1("ore_kona_copper", Material.ROCK);
-	public static final Block ORE_KONA_IRON = new SpaceOre1("ore_kona_iron", Material.ROCK);
-	public static final Block ORE_KONA_TIN = new SpaceOre1("ore_kona_tin", Material.ROCK);
+	public static final Block ORE_KONA_COPPER = new SpaceOre0("ore_kona_copper", Material.ROCK);
+	public static final Block ORE_KONA_IRON = new SpaceOre0("ore_kona_iron", Material.ROCK);
+	public static final Block ORE_KONA_TIN = new SpaceOre0("ore_kona_tin", Material.ROCK);
 	
 	//hollows
 	//public static final Block ORE_HOLLOWS_TERRAMINIUM = new SpaceOreIce("ore_hollows_terraminium", Material.ICE);

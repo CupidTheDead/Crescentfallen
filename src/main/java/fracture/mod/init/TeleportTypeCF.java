@@ -15,7 +15,8 @@ package fracture.mod.init;
 	import net.minecraft.world.WorldServer;
 	import net.minecraft.world.biome.Biome;
 
-
+	//Note: currently not functioning, needs to be fixed
+	
 	public class TeleportTypeCF implements ITeleportType {
 		//changed to basic random y spawn algorithm (400-500)
 	  protected double playerSpawnY = 400 + (Math.random() * 500);
@@ -29,7 +30,7 @@ package fracture.mod.init;
 	      GCPlayerStats stats = GCPlayerStats.get((Entity)player);
 	      double x = stats.getCoordsTeleportedFromX();
 	      double z = stats.getCoordsTeleportedFromZ();
-	      //changes to getbiome 
+	      //changed to getbiome 
 	      Biome biome = world.getBiome(new BlockPos(x, 0.0D, z));
 	      //if (BiomeUtils.isOceanBiome(biome))
 	        //return null; 
@@ -86,7 +87,7 @@ package fracture.mod.init;
 	                newWorld.updateEntityWithOptionalForce(lander, true);
 	                player.startRiding(lander);
 	                CompatibilityManager.forceLoadChunksEnd((WorldServer) newWorld, previous);
-	                GCLog.debug("Entering lander at : " + player.posX + "," + player.posZ + " lander spawn at: " + lander.posX + "," + lander.posZ);
+	                //GCLog.debug("Entering lander at : " + player.posX + "," + player.posZ + " lander spawn at: " + lander.posX + "," + lander.posZ);
 	            }
 	            stats.setTeleportCooldown(10);
 	    } 

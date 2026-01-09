@@ -1,5 +1,6 @@
+//GUNS
 
-
+item.laer_15.name=LAER-15
 
 //ITEMS
 
@@ -170,5 +171,7 @@ moon.kona=Kona
 //CREATIVE TABS
 
 itemGroup.crescentfallentab=Crescentfallen Items
+
+itemGroup.crescentfallentabguns=Crescentfallen Guns
 
 itemGroup.CrescentfallenTab=Crescentfallen Blocks
