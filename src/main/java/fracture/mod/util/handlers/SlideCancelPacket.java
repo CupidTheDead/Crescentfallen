@@ -21,9 +21,12 @@ public class SlideCancelPacket implements IMessage {
         public IMessage onMessage(SlideCancelPacket message, MessageContext ctx) {
             EntityPlayerMP player = ctx.getServerHandler().player;
             player.server.addScheduledTask(() -> {
-                // Force state to NONE to stop the slide physics
-                player.getEntityData().setString("diveState", "NONE");
-                player.getEntityData().setInteger("diveCount", 0);
+                String currentState = player.getEntityData().getString("diveState");
+                
+                if ("SLIDING".equals(currentState)) {
+                    player.getEntityData().setString("diveState", "NONE");
+                    player.getEntityData().setInteger("diveCount", 0);
+                }
             });
             return null;
         }

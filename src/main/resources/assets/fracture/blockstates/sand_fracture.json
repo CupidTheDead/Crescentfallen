@@ -1,5 +1,22 @@
 {
     "variants": {
-        "normal": { "model": "fracture:sand_fracture" }
+        "normal": [
+            { "model": "fracture:sand_fracture" },
+            { "model": "fracture:sand_fracture", "x": 90 },
+            { "model": "fracture:sand_fracture", "x": 180 },
+            { "model": "fracture:sand_fracture", "x": 270 },
+            { "model": "fracture:sand_fracture", "y": 90 },
+            { "model": "fracture:sand_fracture", "y": 90, "x": 90 },
+            { "model": "fracture:sand_fracture", "y": 90, "x": 180 },
+            { "model": "fracture:sand_fracture", "y": 90, "x": 270 },
+            { "model": "fracture:sand_fracture", "y": 180 },
+            { "model": "fracture:sand_fracture", "y": 180, "x": 90 },
+            { "model": "fracture:sand_fracture", "y": 180, "x": 180 },
+            { "model": "fracture:sand_fracture", "y": 180, "x": 270 },
+            { "model": "fracture:sand_fracture", "y": 270 },
+            { "model": "fracture:sand_fracture", "y": 270, "x": 90 },
+            { "model": "fracture:sand_fracture", "y": 270, "x": 180 },
+            { "model": "fracture:sand_fracture", "y": 270, "x": 270 }
+        ]
     }
 }

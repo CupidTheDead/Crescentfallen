@@ -52,7 +52,7 @@ public class CFplanets {
 	// public static Planet planetOneS2;
 
 	/**
-	 * this is our initialization method that will be called in the mods main class
+	 * this is the initialization method that will be called in the mods main class
 	 * to build our celestial bodies
 	 * 
 	 * the order these are in are an important part of this compiling correctly
@@ -93,7 +93,7 @@ public class CFplanets {
 		helius.setRingColorRGB(0.1F, 0.9F, 0.6F);
 		helius.setPhaseShift(10.8748F);
 		helius.setRelativeDistanceFromCenter(new CelestialBody.ScalableDistance(16.9F, 16.9F));
-		helius.setRelativeOrbitTime(1.0F);
+		helius.setRelativeOrbitTime(13.0F);
 		helius.setBodyIcon(new ResourceLocation(CFInfo.ID, "textures/gui/celestialbodies/helius.png"));
 		GalaxyRegistry.registerMoon(helius);
 		
@@ -123,7 +123,7 @@ public class CFplanets {
 		kona.setPhaseShift(10.8748F);
 		kona.setRelativeDistanceFromCenter(new CelestialBody.ScalableDistance(11.9F, 11.9F));
 		//the higher you set the orbit time, the slower it will go.
-		kona.setRelativeOrbitTime(1.1F);
+		kona.setRelativeOrbitTime(11.2F);
 		kona.setBodyIcon(new ResourceLocation(CFInfo.ID, "textures/gui/celestialbodies/kona.png"));
 		GalaxyRegistry.registerMoon(kona);
 		

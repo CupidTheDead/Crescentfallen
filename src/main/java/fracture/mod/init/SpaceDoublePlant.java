@@ -28,156 +28,136 @@ import java.util.Random;
 
 public class SpaceDoublePlant extends BlockBush implements IHasModel {
 
-	public static final PropertyEnum<Half> HALF = PropertyEnum.create("half", Half.class);
+    public static final PropertyEnum<Half> HALF = PropertyEnum.create("half", Half.class);
 
-	public SpaceDoublePlant(String name, Material material) {
-		super(material);
-		this.setTranslationKey(name);
-		this.setRegistryName(name);
-		this.setSoundType(SoundType.PLANT);
-		this.setCreativeTab(CFMain.CrescentfallenBlocks);
-		this.setHardness(0.0F);
-		this.setLightOpacity(0);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(HALF, Half.LOWER));
+    public SpaceDoublePlant(String name, Material material) {
+        super(material);
+        this.setTranslationKey(name);
+        this.setRegistryName(name);
+        this.setSoundType(SoundType.PLANT);
+        this.setCreativeTab(CFMain.CrescentfallenBlocks);
+        this.setHardness(0.0F);
+        this.setLightOpacity(0);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(HALF, Half.LOWER));
 
-		BlockInit.BLOCKS.add(this);
-		ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
-	}
+        BlockInit.BLOCKS.add(this);
+        ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
+    }
 
-	@Override
-	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-		if (!super.canPlaceBlockAt(worldIn, pos))
-			return false; // base checks
+    @Override
+    public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state) {
+        if (state.getValue(HALF) == Half.UPPER) {
+            // The upper half is valid ONLY if the block below is the lower half of this plant
+            IBlockState downState = worldIn.getBlockState(pos.down());
+            return downState.getBlock() == this && downState.getValue(HALF) == Half.LOWER;
+        } else {
+            // The lower half checks for valid soil (dirt/grass) using the default bush logic
+            return super.canBlockStay(worldIn, pos, state);
+        }
+    }
 
-		return pos.getY() < worldIn.getHeight() - 1 && worldIn.isAirBlock(pos.up());
-	}
+    @Override
+    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+        if (!super.canPlaceBlockAt(worldIn, pos))
+            return false;
 
-	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state,
-			@Nullable net.minecraft.entity.EntityLivingBase placer, net.minecraft.item.ItemStack stack) {
+        return pos.getY() < worldIn.getHeight() - 1 && worldIn.isAirBlock(pos.up());
+    }
 
-		if (!worldIn.isAirBlock(pos.up()) && !worldIn.getBlockState(pos.up()).getMaterial().isReplaceable()) {
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state,
+            @Nullable net.minecraft.entity.EntityLivingBase placer, net.minecraft.item.ItemStack stack) {
 
-			worldIn.setBlockToAir(pos);
-			return;
-		}
+        if (!worldIn.isAirBlock(pos.up()) && !worldIn.getBlockState(pos.up()).getMaterial().isReplaceable()) {
+            worldIn.setBlockToAir(pos);
+            return;
+        }
 
-		// Place lower at pos and upper at pos.up()
-		worldIn.setBlockState(pos, this.getDefaultState().withProperty(HALF, Half.LOWER), 2);
-		worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(HALF, Half.UPPER), 2);
-	}
+        worldIn.setBlockState(pos, this.getDefaultState().withProperty(HALF, Half.LOWER), 2);
+        worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(HALF, Half.UPPER), 2);
+    }
 
-	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		Half half = state.getValue(HALF);
-		BlockPos other = (half == Half.UPPER) ? pos.down() : pos.up();
-		IBlockState otherState = worldIn.getBlockState(other);
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        Half half = state.getValue(HALF);
+        BlockPos other = (half == Half.UPPER) ? pos.down() : pos.up();
+        IBlockState otherState = worldIn.getBlockState(other);
 
-		if (otherState.getBlock() == this && otherState.getValue(HALF) != half) {
+        // If the other half is still this block, break it too so we don't leave floating halves
+        if (otherState.getBlock() == this && otherState.getValue(HALF) != half) {
+            worldIn.setBlockToAir(other);
+        }
 
-			worldIn.setBlockToAir(other);
-		}
+        super.breakBlock(worldIn, pos, state);
+    }
 
-		super.breakBlock(worldIn, pos, state);
-	}
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return (state.getValue(HALF) == Half.UPPER) ? Item.getItemFromBlock(Blocks.AIR) : Item.getItemFromBlock(this);
+    }
 
-	@Override
-	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		Half half = state.getValue(HALF);
-		if (half == Half.UPPER) {
+    @Override
+    public BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.CUTOUT;
+    }
 
-			IBlockState below = worldIn.getBlockState(pos.down());
-			if (below.getBlock() != this || below.getValue(HALF) != Half.LOWER) {
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
 
-				worldIn.setBlockToAir(pos);
-			}
-		} else {
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
 
-			IBlockState above = worldIn.getBlockState(pos.up());
-			boolean upperOk = (above.getBlock() == this && above.getValue(HALF) == Half.UPPER);
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 1.0D, 0.9D);
+    }
 
-			boolean soilOk = worldIn.getBlockState(pos.down()).getBlock()
-					.canSustainPlant(worldIn.getBlockState(pos.down()), worldIn, pos.down(), EnumFacing.UP, this);
-			if (!upperOk && !soilOk) {
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(HALF, meta == 1 ? Half.UPPER : Half.LOWER);
+    }
 
-				worldIn.setBlockToAir(pos);
-				if (!worldIn.isRemote) {
-					spawnAsEntity(worldIn, pos, new net.minecraft.item.ItemStack(this));
-				}
-			}
-		}
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return (state.getValue(HALF) == Half.UPPER) ? 1 : 0;
+    }
 
-		super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
-	}
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, HALF);
+    }
 
-	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    @Override
+    public void registerModels() {
+        CFMain.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
+    }
 
-		return (state.getValue(HALF) == Half.UPPER) ? Item.getItemFromBlock(Blocks.AIR) : Item.getItemFromBlock(this);
-	}
+    @Override
+    public EnumOffsetType getOffsetType() {
+        return EnumOffsetType.XZ;
+    }
 
-	@Override
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.CUTOUT;
-	}
+    public static enum Half implements IStringSerializable {
+        LOWER("lower"), UPPER("upper");
 
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
+        private final String name;
 
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
+        Half(String name) {
+            this.name = name;
+        }
 
-	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 1.0D, 0.9D);
-	}
+        @Override
+        public String getName() {
+            return this.name;
+        }
 
-	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(HALF, meta == 1 ? Half.UPPER : Half.LOWER);
-	}
-
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		return (state.getValue(HALF) == Half.UPPER) ? 1 : 0;
-	}
-
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, HALF);
-	}
-
-	@Override
-	public void registerModels() {
-		CFMain.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
-	}
-
-	@Override
-	public EnumOffsetType getOffsetType() {
-		return EnumOffsetType.XZ;
-	}
-
-	public static enum Half implements IStringSerializable {
-		LOWER("lower"), UPPER("upper");
-
-		private final String name;
-
-		Half(String name) {
-			this.name = name;
-		}
-
-		@Override
-		public String getName() {
-			return this.name;
-		}
-
-		@Override
-		public String toString() {
-			return this.name;
-		}
-	}
+        @Override
+        public String toString() {
+            return this.name;
+        }
+    }
 }

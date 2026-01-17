@@ -1,5 +1,10 @@
 {
     "variants": {
-        "normal": { "model": "fracture:overgrass_block" }
+        "normal": [
+            { "model": "fracture:overgrass_block" },
+            { "model": "fracture:overgrass_block", "y": 90 },
+            { "model": "fracture:overgrass_block", "y": 180 },
+            { "model": "fracture:overgrass_block", "y": 270 }
+        ]
     }
 }

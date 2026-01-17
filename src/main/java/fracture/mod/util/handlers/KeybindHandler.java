@@ -1,19 +1,14 @@
 package fracture.mod.util.handlers;
 
+import fracture.mod.CFMain;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.entity.EntityPlayerSP;
-//import net.minecraftforge.client.event.InputEvent;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.input.Keyboard;
-import fracture.mod.CFMain;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-
+import org.lwjgl.input.Keyboard;
 
 public class KeybindHandler {
     public static KeyBinding diveKey;
@@ -26,28 +21,14 @@ public class KeybindHandler {
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        // Get the Minecraft instance
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.player == null) return;
         EntityPlayerSP player = mc.player;
 
-        // Dive key pressed -> send DivePacket
         if (diveKey.isPressed()) {
-            float forward = player.moveForward;
-            float strafe = player.moveStrafing;
+            float forward = player.movementInput.moveForward;
+            float strafe = player.movementInput.moveStrafe;
             CFMain.NETWORK.sendToServer(new DivePacket(forward, strafe));
-        }
-
-        // If any movement key is pressed, tell the server to cancel slide
-        boolean moved = mc.gameSettings.keyBindForward.isKeyDown()
-                     || mc.gameSettings.keyBindBack.isKeyDown()
-                     || mc.gameSettings.keyBindLeft.isKeyDown()
-                     || mc.gameSettings.keyBindRight.isKeyDown()
-                     || mc.gameSettings.keyBindJump.isKeyDown()
-                     || mc.gameSettings.keyBindSneak.isKeyDown();
-
-        if (moved) {
-            CFMain.NETWORK.sendToServer(new SlideCancelPacket());
         }
     }
 }

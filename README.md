@@ -5,4 +5,3 @@ Currently looking for help from developers with creating this mod! I have some e
 This mod is dedicated to the creators of Galacticraft, Moreplanets, and Extraplanets for inspiring me to make this.
 
 <3
-![alt text](hellofrombyond-1.png)

@@ -58,27 +58,19 @@ public class SpaceGrass extends Block implements IHasModel
 		return true;
 	}
 	
-	
-	
-	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random) {
 	    super.randomDisplayTick(state, world, pos, random);
 
-	    // Spawn a few gentle floating particles above the grass
-	    for (int i = 0; i < 3; ++i) {
-	        // Center around the block
-	        double x = pos.getX() + 0.9 + (random.nextDouble() - 0.5) * 0.6;
-	        double z = pos.getZ() + 0.9 + (random.nextDouble() - 0.5) * 0.6;
+	    // Vanilla Mycelium
+	    if (random.nextInt(10) == 0) {
+	        
+	        double x = (double)pos.getX() + random.nextDouble();
+	        double y = (double)pos.getY() + 1.1D; 
+	        double z = (double)pos.getZ() + random.nextDouble();
 
-	        // Lift the particles slightly above the block top surface
-	        double y = pos.getY() + 1.05 + random.nextDouble() * 0.3; // <-- note the +1.05 here
-
-	        // Gentle upward float motion
-	        double motionY = 0.005 + random.nextDouble() * 0.005;
-
-	        world.spawnParticle(EnumParticleTypes.SUSPENDED_DEPTH, x, y, z, 0, motionY, 0);
+	        world.spawnParticle(EnumParticleTypes.TOWN_AURA, x, y, z, 0.0D, 0.0D, 0.0D);
 	    }
 	}
 }

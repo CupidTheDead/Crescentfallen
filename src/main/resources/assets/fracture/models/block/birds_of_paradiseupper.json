@@ -1,6 +1,6 @@
 {
-  "parent": "block/cross",
-  "textures": {
-    "cross": "fracture:blocks/birds_of_paradise_upper"
-  }
+    "parent": "block/cross",
+    "textures": {
+        "cross": "fracture:blocks/birds_of_paradise_upper"
+    }
 }

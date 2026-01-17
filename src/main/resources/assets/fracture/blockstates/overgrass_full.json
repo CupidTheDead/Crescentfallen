@@ -1,5 +1,22 @@
 {
     "variants": {
-        "normal": { "model": "fracture:overgrass_full" }
+        "normal": [
+            { "model": "fracture:overgrass_full" },
+            { "model": "fracture:overgrass_full", "x": 90 },
+            { "model": "fracture:overgrass_full", "x": 180 },
+            { "model": "fracture:overgrass_full", "x": 270 },
+            { "model": "fracture:overgrass_full", "y": 90 },
+            { "model": "fracture:overgrass_full", "y": 90, "x": 90 },
+            { "model": "fracture:overgrass_full", "y": 90, "x": 180 },
+            { "model": "fracture:overgrass_full", "y": 90, "x": 270 },
+            { "model": "fracture:overgrass_full", "y": 180 },
+            { "model": "fracture:overgrass_full", "y": 180, "x": 90 },
+            { "model": "fracture:overgrass_full", "y": 180, "x": 180 },
+            { "model": "fracture:overgrass_full", "y": 180, "x": 270 },
+            { "model": "fracture:overgrass_full", "y": 270 },
+            { "model": "fracture:overgrass_full", "y": 270, "x": 90 },
+            { "model": "fracture:overgrass_full", "y": 270, "x": 180 },
+            { "model": "fracture:overgrass_full", "y": 270, "x": 270 }
+        ]
     }
 }

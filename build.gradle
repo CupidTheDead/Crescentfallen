@@ -46,6 +46,11 @@ repositories {
    
     maven { url "https://minecraft.curseforge.com/api/maven" }
 
+	//maven {
+    //		name = "LocalRepo"
+    //		url "file://${project.projectDir}/local_repo"
+	//	  }
+
     //mavenCentral()
    //jcenter()
 }
@@ -84,6 +89,11 @@ dependencies {
   	deobfCompile "curse.maven:industrial-craft-242638:3078604"
   	
   	deobfCompile "curse.maven:geckolib-388172:3627498"
+  	
+  	//deobfCompile "noppes:customnpcs:1.12.2"
+  	//deobfCompile files("libs/CustomNPCs_1.12.2-(05Jul20).jar")
+  	//deobfCompile "curse.maven:custom-npcs-221826:2996912"
+	//compile "curse.maven:custom-npcs-221826:2992364"
   	
 	//deobfCompile "curse.maven:buildcraft-"
     // for more info...

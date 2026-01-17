@@ -1,5 +1,22 @@
 {
     "variants": {
-        "normal": { "model": "fracture:stone_fracture" }
+        "normal": [
+            { "model": "fracture:stone_fracture" },
+            { "model": "fracture:stone_fracture", "x": 90 },
+            { "model": "fracture:stone_fracture", "x": 180 },
+            { "model": "fracture:stone_fracture", "x": 270 },
+            { "model": "fracture:stone_fracture", "y": 90 },
+            { "model": "fracture:stone_fracture", "y": 90, "x": 90 },
+            { "model": "fracture:stone_fracture", "y": 90, "x": 180 },
+            { "model": "fracture:stone_fracture", "y": 90, "x": 270 },
+            { "model": "fracture:stone_fracture", "y": 180 },
+            { "model": "fracture:stone_fracture", "y": 180, "x": 90 },
+            { "model": "fracture:stone_fracture", "y": 180, "x": 180 },
+            { "model": "fracture:stone_fracture", "y": 180, "x": 270 },
+            { "model": "fracture:stone_fracture", "y": 270 },
+            { "model": "fracture:stone_fracture", "y": 270, "x": 90 },
+            { "model": "fracture:stone_fracture", "y": 270, "x": 180 },
+            { "model": "fracture:stone_fracture", "y": 270, "x": 270 }
+        ]
     }
 }

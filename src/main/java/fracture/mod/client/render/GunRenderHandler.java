@@ -21,7 +21,7 @@ public class GunRenderHandler {
 
         if (item instanceof ItemCustomGun) {
             
-            // 2. Stop the default MrCrayfish/Minecraft rendering
+            // Stop the default MrCrayfish/Minecraft rendering
             event.setCanceled(true);
 
             // Force Hybrid rendering system to run

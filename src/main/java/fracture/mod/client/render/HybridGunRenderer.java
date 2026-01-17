@@ -13,15 +13,15 @@ public class HybridGunRenderer extends GeoItemRenderer<ItemCustomGun> {
 
     @Override
     public void renderByItem(ItemStack itemStack) {
-        // --- MODE: GECKOLIB ONLY ---
+        // --- GECKOLIB ---
         
         GlStateManager.pushMatrix();
         
-        // FIX 1: Center the model in the hand
+        // Center the model in the hand
         // (0.5, 0.5, 0.5) is the center of the block.
         GlStateManager.translate(0.5, 0.5, 0.5);
         
-        // FIX 2: Correct the scale (1.0 is standard, adjust if tiny/huge)
+        // Correct the scale (1.0 is standard, adjust if tiny/huge)
         GlStateManager.scale(1.0F, 1.0F, 1.0F); 
 
         // RENDER

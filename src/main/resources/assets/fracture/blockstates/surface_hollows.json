@@ -1,5 +1,22 @@
 {
     "variants": {
-        "normal": { "model": "fracture:surface_hollows" }
+        "normal": [
+            { "model": "fracture:surface_hollows" },
+            { "model": "fracture:surface_hollows", "x": 90 },
+            { "model": "fracture:surface_hollows", "x": 180 },
+            { "model": "fracture:surface_hollows", "x": 270 },
+            { "model": "fracture:surface_hollows", "y": 90 },
+            { "model": "fracture:surface_hollows", "y": 90, "x": 90 },
+            { "model": "fracture:surface_hollows", "y": 90, "x": 180 },
+            { "model": "fracture:surface_hollows", "y": 90, "x": 270 },
+            { "model": "fracture:surface_hollows", "y": 180 },
+            { "model": "fracture:surface_hollows", "y": 180, "x": 90 },
+            { "model": "fracture:surface_hollows", "y": 180, "x": 180 },
+            { "model": "fracture:surface_hollows", "y": 180, "x": 270 },
+            { "model": "fracture:surface_hollows", "y": 270 },
+            { "model": "fracture:surface_hollows", "y": 270, "x": 90 },
+            { "model": "fracture:surface_hollows", "y": 270, "x": 180 },
+            { "model": "fracture:surface_hollows", "y": 270, "x": 270 }
+        ]
     }
 }

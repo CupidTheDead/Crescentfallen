@@ -58,19 +58,10 @@ public class WorldProviderTheFracture extends WorldProviderSpace implements IGal
 	}
 	
 	
-	
-		//zollorns
-	
-	 // public double getYCoordinateToTeleport() {
-	//	    return 150.0D;
-		//  }
-	  
-	  
-	  
-		//zollorns
-
-
-
+	@Override
+    public float getCloudHeight() {
+        return -1000.0F; 
+    }
 
 	@Override
 	public Vector3 getFogColor() {
