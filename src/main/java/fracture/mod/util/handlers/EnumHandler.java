@@ -64,6 +64,7 @@ public class EnumHandler {
 
 		public static EnumType byMetadata(int meta) {
 			return META_LOOKUP[meta];
+			// add comment
 		}
 
 		static {
