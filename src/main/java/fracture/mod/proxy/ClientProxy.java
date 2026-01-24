@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.common.MinecraftForge;
+import fracture.mod.util.handlers.ClientEventHandler;
 import fracture.mod.util.handlers.GunEventHandler;
 
 public class ClientProxy extends Proxy {
@@ -44,6 +45,7 @@ public class ClientProxy extends Proxy {
         // Registers mouse click and sets the NBT tag
         MinecraftForge.EVENT_BUS.register(new GunEventHandler());
 
+        MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
         // Register Render Handler (Optional if you used @EventBusSubscriber)
         // MinecraftForge.EVENT_BUS.register(new fracture.mod.client.render.GunRenderHandler());
         

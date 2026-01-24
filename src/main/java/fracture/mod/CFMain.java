@@ -21,6 +21,11 @@ import fracture.mod.util.handlers.FlowerSpawnHandler;
 import fracture.mod.util.handlers.KeybindHandler;
 import fracture.mod.util.handlers.PlayerMovementHandler;
 import fracture.mod.util.handlers.SlideCancelPacket;
+import fracture.mod.world.epchanges.CfEuropaChunkgen;
+import fracture.mod.world.epchanges.CfIoChunkgen;
+//import fracture.mod.world.epchanges.WorldGenEuropaIce;
+//import fracture.mod.world.epchanges.IoTerrainDecorator;
+//import fracture.mod.world.epchanges.WorldGenIoOptimized;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -34,6 +39,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
@@ -93,7 +99,19 @@ public class CFMain {
 		//public static final int dreamyardDIM = ConfigManagerCore. 1010;
 
 		// new AddonDimensions();
-
+		
+		// --- DEBUG START ---
+	    //System.out.println("--------------------------------------------------");
+	    //System.out.println("[Fracture] PRE-INIT STARTED");
+	    
+	    // Register the Generator here (Safer than init)
+	    MinecraftForge.EVENT_BUS.register(new CfIoChunkgen());	    
+	    MinecraftForge.EVENT_BUS.register(new CfEuropaChunkgen());
+	    //GameRegistry.registerWorldGenerator(new WorldGenEuropaIce(), 2000); // Higher weight runs later
+	    //System.out.println("[Fracture] Generator Registered successfully!");
+	    //System.out.println("--------------------------------------------------");
+	    // --- DEBUG END ---
+	    
 		proxy.preInit(event);
 		// GalacticraftCore.satelliteSpaceStation = (Satellite) new
 		// Satellite("spacestation.fracture").setParentBody(AddonPlanets.planetTwoS1).setRelativeSize(0.2667F).setRelativeDistanceFromCenter(new
@@ -136,13 +154,13 @@ public class CFMain {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 
-		proxy.init(event);
 		// new AddonSolarSystems();
 		// new AddonPlanets();
 		// new AddonDimensions();
 
         //proxy.init();
-		
+        MinecraftForge.EVENT_BUS.register(new fracture.mod.util.handlers.CommonEventHandler());            
+
 		//MOVEMENT SYSTEM TESTING
         // register keybinds client-side only
         if (event.getSide().isClient()) {
@@ -166,11 +184,20 @@ public class CFMain {
                 MinecraftForge.EVENT_BUS.register(new fracture.mod.util.handlers.SlideClientHandler());
             }
 		//...
+            // Replacer test
+            //MinecraftForge.EVENT_BUS.register(new IoTerrainDecorator());
+            //GameRegistry.registerWorldGenerator(new WorldGenIoOptimized(), 1000);
             
-            
+            //GameRegistry.registerWorldGenerator(new WorldGenIoOptimized(), 1000);
+            //MinecraftForge.EVENT_BUS.register(new IoFastReplacer());
             //alpha rose spawner(not working)
-            MinecraftForge.EVENT_BUS.register(new FlowerSpawnHandler());
             
+            MinecraftForge.EVENT_BUS.register(new FlowerSpawnHandler());
+            // Register IO World Load Tweaker
+            //MinecraftForge.EVENT_BUS.register(new IoWorldTweaker());
+            
+    		proxy.init(event);
+
 	}
 
 	@EventHandler
@@ -194,6 +221,9 @@ public class CFMain {
                 WorldProviderDreamyard.class, false);
         CFdimensions.dreamyardDIM = WorldUtil.getDimensionTypeById(CFConfig.AddonDimensions.dreamyardID);
 		//CFdimensions.init();
+        //fracture.mod.world.epchanges.IoBiomeTweaker.tweak();
+        //MinecraftForge.EVENT_BUS.register(new fracture.mod.world.epchanges.IoTerrainEventHandler());        
+        
 		proxy.postInit(event);
 		//new CFsolarsystems();
 		//new CFplanets();

@@ -46,10 +46,10 @@ repositories {
    
     maven { url "https://minecraft.curseforge.com/api/maven" }
 
-	//maven {
-    //		name = "LocalRepo"
-    //		url "file://${project.projectDir}/local_repo"
-	//	  }
+	// maven {
+    // 		name = "LocalRepo"
+    // 		url "file://${project.projectDir}/local_repo"
+	// 	  }
 
     //mavenCentral()
    //jcenter()
@@ -91,6 +91,10 @@ dependencies {
   	deobfCompile "curse.maven:geckolib-388172:3627498"
   	
   	//deobfCompile "noppes:customnpcs:1.12.2"
+  	
+  	deobfCompile "curse.maven:mjrlegendslib-284331:3344068"
+  	
+  	deobfCompile "curse.maven:extraplanets-241291:3031687"
   	//deobfCompile files("libs/CustomNPCs_1.12.2-(05Jul20).jar")
   	//deobfCompile "curse.maven:custom-npcs-221826:2996912"
 	//compile "curse.maven:custom-npcs-221826:2992364"
