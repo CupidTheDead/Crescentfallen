@@ -7,6 +7,7 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 	//CAMERA TILT TESTING
+	// Note: make this only trigger when wearing spacesuit in future
 
 public class CameraTiltHandler {
 

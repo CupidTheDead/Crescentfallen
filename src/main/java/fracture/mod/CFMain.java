@@ -1,5 +1,6 @@
 package fracture.mod;
 
+//import fracture.mod.client.render.HidePressureOverlay;
 //import fracture.mod.AddonConfig.Dimension;
 import fracture.mod.init.CFdimensions;
 import fracture.mod.init.CFplanets;
@@ -23,10 +24,12 @@ import fracture.mod.util.handlers.PlayerMovementHandler;
 import fracture.mod.util.handlers.SlideCancelPacket;
 import fracture.mod.world.epchanges.CfEuropaChunkgen;
 import fracture.mod.world.epchanges.CfIoChunkgen;
+import fracture.mod.world.epchanges.CfOberonChunkgen;
 //import fracture.mod.world.epchanges.WorldGenEuropaIce;
 //import fracture.mod.world.epchanges.IoTerrainDecorator;
 //import fracture.mod.world.epchanges.WorldGenIoOptimized;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -43,6 +46,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
 import micdoodle8.mods.galacticraft.core.util.WorldUtil;
@@ -97,7 +101,9 @@ public class CFMain {
 		new CFplanets();
 		// AddonPlanets.this.registerPlanets();
 		//public static final int dreamyardDIM = ConfigManagerCore. 1010;
-
+		
+		//MinecraftForge.EVENT_BUS.register(new HidePressureOverlay());
+		
 		// new AddonDimensions();
 		
 		// --- DEBUG START ---
@@ -107,6 +113,7 @@ public class CFMain {
 	    // Register the Generator here (Safer than init)
 	    MinecraftForge.EVENT_BUS.register(new CfIoChunkgen());	    
 	    MinecraftForge.EVENT_BUS.register(new CfEuropaChunkgen());
+	    MinecraftForge.EVENT_BUS.register(new CfOberonChunkgen());
 	    //GameRegistry.registerWorldGenerator(new WorldGenEuropaIce(), 2000); // Higher weight runs later
 	    //System.out.println("[Fracture] Generator Registered successfully!");
 	    //System.out.println("--------------------------------------------------");
@@ -183,6 +190,7 @@ public class CFMain {
                 // client-side slide visuals(not working)
                 MinecraftForge.EVENT_BUS.register(new fracture.mod.util.handlers.SlideClientHandler());
             }
+            MinecraftForge.EVENT_BUS.register(new fracture.mod.util.handlers.GanymedeInjector());
 		//...
             // Replacer test
             //MinecraftForge.EVENT_BUS.register(new IoTerrainDecorator());
@@ -223,6 +231,10 @@ public class CFMain {
 		//CFdimensions.init();
         //fracture.mod.world.epchanges.IoBiomeTweaker.tweak();
         //MinecraftForge.EVENT_BUS.register(new fracture.mod.world.epchanges.IoTerrainEventHandler());        
+        
+        
+        
+
         
 		proxy.postInit(event);
 		//new CFsolarsystems();

@@ -10,7 +10,7 @@ public class ModelCustomGun extends AnimatedGeoModel<ItemCustomGun> {
 	
     @Override
     public ResourceLocation getModelLocation(ItemCustomGun object) {
-        // Dynamically finds the .geo.json file based on the item name
+        // Finds .geo.json file based on the item name
         // Example: fracture:geo/old_earth_rifle.geo.json
         return new ResourceLocation("fracture", "geo/" + object.getRegistryName().getPath() + ".geo.json");
     }

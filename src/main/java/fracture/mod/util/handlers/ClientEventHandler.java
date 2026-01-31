@@ -1,5 +1,7 @@
 package fracture.mod.util.handlers;
 
+import com.mjr.extraplanets.moons.Oberon.SkyProviderOberon;
+
 import fracture.mod.client.sky.EuropaSkyProvider;
 import fracture.mod.client.sky.IoSkyProvider;
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
@@ -23,16 +25,24 @@ public class ClientEventHandler {
         if (event.getWorld().provider instanceof IGalacticraftWorldProvider) {
             IGalacticraftWorldProvider gcProvider = (IGalacticraftWorldProvider) event.getWorld().provider;
 
-            // IO Sky
+            // IO sky
             if (dimID == IO_DIMENSION_ID) {
                 event.getWorld().provider.setSkyRenderer(new IoSkyProvider(gcProvider));
             }
+            	// Oberon ID
+                if (event.getWorld().isRemote && event.getWorld().provider.getDimension() == -1509) { 
+                    // Cast provider to Galacticraft provider if needed, or pass 'null' if your constructor allows it 
+                    // (Note: your current constructor requires IGalacticraftWorldProvider to get Solar Size)
+                    
+                    if (event.getWorld().provider instanceof IGalacticraftWorldProvider) {
+                        event.getWorld().provider.setSkyRenderer(new SkyProviderOberon((IGalacticraftWorldProvider) event.getWorld().provider));
+                    }
+                }
             
-            // EUROPA Sky
+            // Europa sky
             else if (dimID == EUROPA_DIMENSION_ID) {
                 event.getWorld().provider.setSkyRenderer(new EuropaSkyProvider(gcProvider));
                 System.out.println("[Fracture] Europa Sky Provider ATTACHED.");
-                // Removed Biome logic from here
             }
         }
     }

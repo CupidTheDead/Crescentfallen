@@ -11,6 +11,7 @@ import fracture.mod.init.BlockInit; // adjust if your BlockInit package/name dif
 
 /**
  * Simple generator that places a small cluster of ALPHA_ROSE blocks.
+ * Note: this is currently broken. fix later.
  */
 public class AlphaRoseGenerator extends WorldGenerator {
 

@@ -28,7 +28,7 @@ public class IoSkyProvider extends IRenderHandler {
     private static final ResourceLocation sunTexture = new ResourceLocation(Constants.ASSET_PREFIX, "textures/gui/planets/orbitalsun.png");
     private static final ResourceLocation earthTexture = new ResourceLocation(Constants.ASSET_PREFIX, "textures/gui/celestialbodies/jupiter.png");
 
-    // Sky base
+    // Skylayer1
     private float skyR = 0.0F;
     private float skyG = 0.0F;
     private float skyB = 0.05F;
@@ -128,7 +128,7 @@ public class IoSkyProvider extends IRenderHandler {
         OpenGlHelper.glBlendFunc(770, 771, 1, 0);
         RenderHelper.disableStandardItemLighting();
 
-        // PARALLAX STARS
+        // Parallax stars
         float celestialAngle = world.getCelestialAngle(partialTicks);
         
         GlStateManager.pushMatrix();
@@ -149,7 +149,7 @@ public class IoSkyProvider extends IRenderHandler {
         GL11.glCallList(this.starList);
         GlStateManager.popMatrix();
 
-        // SUN
+        // Sun
         float[] afloat = new float[4];
         GlStateManager.disableTexture2D();
         GlStateManager.shadeModel(GL11.GL_SMOOTH);
@@ -259,7 +259,7 @@ public class IoSkyProvider extends IRenderHandler {
 
         GlStateManager.popMatrix();
         
-        // RENDER JUPITER
+        // Jupiter sky object
         GlStateManager.pushMatrix();
         GlStateManager.rotate(34.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);

@@ -6,6 +6,8 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import fracture.mod.client.event.HidePressureScissor;
+//import fracture.mod.client.event.HidePressureTick;
 import fracture.mod.util.Reference;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -13,6 +15,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.common.MinecraftForge;
 import fracture.mod.util.handlers.ClientEventHandler;
 import fracture.mod.util.handlers.GunEventHandler;
+import com.mjr.extraplanets.Config;
 
 public class ClientProxy extends Proxy {
 
@@ -39,6 +42,8 @@ public class ClientProxy extends Proxy {
     public void init(FMLInitializationEvent event) {
         super.init(event);
 
+        MinecraftForge.EVENT_BUS.register(new HidePressureScissor());
+        
         // GUN SYSTEM HANDLERS TESTING
         
         // Register the Logic Handler (Used for firing animation)

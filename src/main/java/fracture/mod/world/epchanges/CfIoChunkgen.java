@@ -41,7 +41,7 @@ public class CfIoChunkgen {
             initialized = true;
         }
         
-        // Safety: If blocks or biomes are missing, we can still run partial logic, 
+        // If blocks or biomes are missing, partial logic can still be run, 
         // but checking target block is essential.
         if (ashRockState == null || targetIoBlock == null) return;
 
@@ -67,7 +67,7 @@ public class CfIoChunkgen {
             }
         }
 
-        // PROCESS STORAGE
+        // Process storage
         for (ExtendedBlockStorage storage : chunk.getBlockStorageArray()) {
             if (storage != null) {
                 int yBase = storage.getYLocation();
@@ -85,10 +85,9 @@ public class CfIoChunkgen {
 
                             // Cracks/ravine gen
                             // cut from Y=25 (Deep) up to Y=75 (Surface)
-                            // This creates a ravine (67)
                             if (isCrack && realY > 25 && realY < 75) {
                                 IBlockState current = storage.get(x, y, z);
-                                // Don't break Bedrock or Air
+                                // Dont break bedrock or air
                                 if (current.getBlock() != Blocks.BEDROCK && current.getBlock() != Blocks.AIR) {
                                     storage.set(x, y, z, Blocks.AIR.getDefaultState());
                                     modified = true;
@@ -101,7 +100,6 @@ public class CfIoChunkgen {
                             if (realY > 65) {
                                 IBlockState current = storage.get(x, y, z);
                                 
-                                // Check against IO common block (variant matching)
                                 if (current.getBlock() == targetIoBlock) {
                                     
                                     if (rand.nextInt(200) == 0 && magmaState != null) {
@@ -140,7 +138,7 @@ public class CfIoChunkgen {
     }
 
     private void initBlocks() {
-        System.out.println("[Fracture] IoChunkRetrogen: Initializing Cracks & Ash Rock...");
+        System.out.println("[Fracture] CFIoChunkgen: Initializing Cracks & Ash Rock...");
 
         // Blocks
         Block ash = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("extraplanets", "ash_rock"));

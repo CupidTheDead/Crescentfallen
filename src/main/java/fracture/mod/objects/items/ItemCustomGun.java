@@ -46,24 +46,16 @@ public class ItemCustomGun extends ItemGun implements IHasModel, IAnimatable {
         ItemInit.ITEMS.add(this);
     }
 
-    // --- TRIGGER  ---
-    // Detects the click and writes the "LastFiredTime" to the item
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        // Run standard CGM firing logic first (spawns bullets, ammo check)
         ActionResult<ItemStack> result = super.onItemRightClick(worldIn, playerIn, handIn);
-
-        // If the click was valid (SUCCESS) or processed (PASS), update the timestamp
         if (worldIn.isRemote && (result.getType() == EnumActionResult.SUCCESS || result.getType() == EnumActionResult.PASS)) {
             ItemStack stack = playerIn.getHeldItem(handIn);
-            
             if (!stack.hasTagCompound()) {
                 stack.setTagCompound(new NBTTagCompound());
             }
-            
             stack.getTagCompound().setLong("LastFiredTime", System.currentTimeMillis());
         }
-        
         return result;
     }
 
@@ -72,10 +64,8 @@ public class ItemCustomGun extends ItemGun implements IHasModel, IAnimatable {
         data.addAnimationController(new AnimationController(this, "controller", 1, this::predicate));
     }
 
-    // --- ANIMATION LOOP ---
     private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
         try {
-            // Safe Player Retrieval (Critical for 1.12.2 stability)
             EntityPlayer player = null;
             List<Entity> extraData = event.getExtraDataOfType(Entity.class);
             if (!extraData.isEmpty() && extraData.get(0) instanceof EntityPlayer) {
@@ -88,10 +78,10 @@ public class ItemCustomGun extends ItemGun implements IHasModel, IAnimatable {
             if (stack.getItem() != this) return PlayState.STOP;
 
             NBTTagCompound tag = stack.getTagCompound();
-            if(tag != null) {
-                 long now = System.currentTimeMillis();
+            long now = System.currentTimeMillis();
 
-                 // --- RELOAD LOGIC ---
+            if(tag != null) {
+                 // --- RELOAD ANIMATION ---
                  if(tag.hasKey("LastReloadTime")) {
                      long reloadStart = tag.getLong("LastReloadTime");
                      if (now - reloadStart < this.reloadDuration) {
@@ -100,23 +90,18 @@ public class ItemCustomGun extends ItemGun implements IHasModel, IAnimatable {
                      }
                  }
 
-                 // --- FIRE LOGIC ---
+                 // --- FIRE ANIMATION ---
                  if(tag.hasKey("LastFiredTime")) {
                      long lastFired = tag.getLong("LastFiredTime");
                      long timeSinceFire = now - lastFired;
-                     
-                     // Read the gun property correctly
                      boolean isAuto = this.cfGun.general.auto;
 
                      if (isAuto) {
-                         // AUTOMATIC: Loop if firing happened recently (200ms)
                          if (timeSinceFire < 200) {
                              event.getController().setAnimation(new AnimationBuilder().addAnimation("animation_fire", true));
                              return PlayState.CONTINUE;
                          }
                      } else {
-                         // SEMI-AUTO: Play once. 
-                         // 500ms is usually perfect for a recoil animation to finish.
                          if (timeSinceFire < 500) {
                              event.getController().setAnimation(new AnimationBuilder().addAnimation("animation_fire", false));
                              return PlayState.CONTINUE;
@@ -124,8 +109,14 @@ public class ItemCustomGun extends ItemGun implements IHasModel, IAnimatable {
                      }
                  }
             }
+            
+            // --- WALK ANIMATION WIP---
+            if (player.moveForward != 0 || player.moveStrafing != 0) {
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation_walk", true));
+                return PlayState.CONTINUE;
+            }
 
-            // --- IDLE LOGIC ---
+            // --- IDLE ANIMATION WIP---
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation_idle", true));
             return PlayState.CONTINUE;
 

@@ -8,14 +8,15 @@ import java.util.List;
 import java.util.Random;
 
 public class CfBiomeWrapper extends BiomeProvider {
+	
+	//Used for Europa at the moment
+	
     private final BiomeProvider original;
     private final long seed;
-    
-    // Config
     private final int SALT_SEA_ID = 43; 
     private Biome saltSeaBiome;
 
-    // --- SETTINGS ---
+    // Settings
     // Zoom 5 = 32x larger biomes (Was 4)
     private final int zoomFactor = 5; 
     
