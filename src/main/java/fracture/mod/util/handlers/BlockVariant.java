@@ -1,10 +1,10 @@
 package fracture.mod.util.handlers;
 
-import fracture.mod.generator.ItemRegistrarTarget;
+import fracture.mod.generator.GeneratorTarget;
 import net.minecraft.util.IStringSerializable;
 
 
-@ItemRegistrarTarget
+@GeneratorTarget
 public class BlockVariant {
 	
 	public static enum BlockVariantEnum implements IStringSerializable {

@@ -5,24 +5,29 @@ import java.util.List;
 
 import javax.lang.model.element.Modifier;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.squareup.javapoet.FieldSpec;
 
-import fracture.mod.generator.ItemRegistrarTarget;
-import fracture.mod.init.BlockOfCenturium;
+import fracture.mod.generator.GeneratorTarget;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-@ItemRegistrarTarget
+@GeneratorTarget
 public class BlockInit {
 	
+	@Literal
 	public static final List<Block> BLOCKS = new ArrayList<Block>();
 	
-	public static final Block BLOCK_CENTURIUM = new BlockOfCenturium("block_centurium", Material.IRON);
-	
 	@Template
-	public FieldSpec metaBlockRegistration = FieldSpec.builder(Block.class, "$T")
+	public static FieldSpec metaBlockRegistration(JsonNode root) {
+		
+		String name = root.path("name").asText();
+		String properName = name.substring(0, 1).toUpperCase() + name.substring(1);
+		
+		return FieldSpec.builder(Block.class, "BLOCK_" + name.toUpperCase())
 		.addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-		.initializer("new $T($S, $T)")
+		.initializer("new $T($S, $T.$L)", "BlockOf" + properName, "block_" + name, Material.class, root.path("material").asText().toUpperCase())
 		.build();
+	}
 	
 }
